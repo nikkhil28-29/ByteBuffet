@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
             name='address_1',
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
+        
         migrations.AddField(
             model_name='userprofile',
             name='address_2',

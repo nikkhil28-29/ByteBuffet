@@ -9,11 +9,12 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 							<div class="user-dashboard loader-holder">
 								<div class="user-holder">
-                            <h4 class="text-center" style="margin-bottom: 0;">WELCOME TO ByteBasket</h4>
-                            <p class="text-center">Please fill this form to get yourself onboarded in the foodOnline marketplace.</p>
+                            <h4 class="text-center" style="margin-bottom: 0;">PARTNER WITH ByteBasket</h4>
+                            <p class="text-center">Please fill this form to get yourself onboarded in the ByteBasket marketplace.</p>
                             <hr>
                             <div id="restaurant-sets-holder">
-                                <form action='{% url "registerUser" %}' class="form-fields-set foodbakery-dev-restaurant-form" method="post" >
+                                <form action='{% url "registerVendor" %}' class="form-fields-set foodbakery-dev-restaurant-form" method="post" enctype="multipart/form-data"> 
+                                {% comment %} #enctyp="multipart/form-data" to receive file from form {% endcomment %}
 
                                     {% csrf_token %}
                                 
@@ -32,6 +33,18 @@
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
                                                                         <label>Last name</label>{{form.last_name}}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Restaurant Name</label>{{v_form.vendor_name}}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Restaurant License</label>{{v_form.vendor_license}}
                                                                     </div>
                                                                 </div>
 
@@ -77,12 +90,11 @@
                                                 </div>
                                             </div>
                                         </li>
-
                                         <ul class='errorlist'>
-                                                {% if form.non_field_errors %}
-                                                    <li style="color:red;">{{ form.non_field_errors.as_text }}</li>
+                                                {% if v_form.non_field_errors %}
+                                                    <li style="color:red;">{{ v_form.non_field_errors.as_text }}</li>
                                                 {% endif %}
-                                                {% for field in form %}
+                                                {% for field in v_form %}
                                                     {% for j in field.errors %}
                                                         <li style="color:red;">{{ j }}</li>
                                                     {% endfor %}

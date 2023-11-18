@@ -37,11 +37,11 @@ class MyUserManager(BaseUserManager): #it does not contain any fields ,,,it will
 
 
 class MyUser(AbstractBaseUser):
-    RESTAURANT=1
+    VENDOR=1
     CUSTOMER=2
 
     ROLE_CHOICE=(
-        (RESTAURANT,'Restaurant'),
+        (VENDOR,'Restaurant'),
         (CUSTOMER,'Customer'),
     )
 

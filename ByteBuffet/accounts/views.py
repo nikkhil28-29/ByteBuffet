@@ -1,8 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import traceback
+from django.core.exceptions import PermissionDenied
+
+from .utils import detectUser
 
 from django.http import HttpResponse
 from .forms import UserForm
@@ -54,8 +57,11 @@ def registerUser(request):
 
 
 def registerVendor(request):
+    if request.user.is_authenticated:
+            messages.warning(request, 'You are already logged in.')
+            return redirect('dashboard')
    
-    if request.method == 'POST':
+    elif request.method == 'POST':
 
         form = UserForm(request.POST)
         v_form = VendorForm(request.POST, request.FILES)
@@ -100,7 +106,11 @@ from django.contrib import messages
 
 def login(request):
     try:
-        if request.method == 'POST':
+        if request.user.is_authenticated:
+            messages.warning(request, 'You are already logged in.')
+            return redirect('myAccount')
+        
+        elif request.method == 'POST':
             email = request.POST.get("email").strip()
             password = request.POST.get("password").strip()
 
@@ -110,7 +120,7 @@ def login(request):
                 print("Email:", email)
                 print("Password:", password)
                 messages.success(request, 'Login successful.')
-                return redirect('dashboard')
+                return redirect('myAccount')
             else:
                 print("Email:", email)
                 print("Password:", password)
@@ -128,7 +138,38 @@ def user_logout(request):
     messages.success(request, 'Logout successful.')
     return redirect('home')
 
+@login_required(login_url='login')
+def myAccount(request):
+    user = request.user
+    redirectUrl = detectUser(user)
+    return redirect(redirectUrl)
+
+
+
+# Restrict the vendor from accessing the customer page
+def check_role_vendor(user):
+    if user.role == 1:
+        return True
+    else:
+        raise PermissionDenied
+
+
+# Restrict the customer from accessing the vendor page
+def check_role_customer(user):
+    if user.role == 2:
+        return True
+    else:
+        raise PermissionDenied
+
+
 
 @login_required(login_url='login')  
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+@user_passes_test(check_role_customer)
+def customerdashboard(request):
+    return render(request, 'accounts/customerdashboard.html')
+
+@login_required(login_url='login') 
+@user_passes_test(check_role_vendor)
+
+def vendordashboard(request):
+    return render(request, 'accounts/vendordashboard.html')

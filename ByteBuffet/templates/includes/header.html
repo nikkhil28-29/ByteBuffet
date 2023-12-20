@@ -70,20 +70,20 @@
 								</ul>
 								</div>
 						</div>
-						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" >
-							<div class="login-option">
-							{% comment %} {% if user.is_authenticated %}
-							<span><a href="{% url 'logout' %}" class="get-start-btn" style="background-color: #FFFF00;"  >Logout</a></span>
-							{% else %} {% endcomment %}
-								
-                                <span><a href="{% url 'login' %}" class="get-start-btn" style="background-color: #FFFF00;"  >Login</a></span>
-                                <span><a href="{% url 'registerUser' %}" class="cs-color cs-popup-joinus-btn login-popup ml-0">Register</a></span>
-							{% comment %} {% endif %} {% endcomment %}
-								<a class="get-start-btn" href="{% url 'registerVendor' %}">
-                                Register
-                                Restaurant </a>
-							</div>
-						</div>
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="login-option">
+						{% if user.is_authenticated %}
+							<span><a href="{% url 'logout' %}" class="get-start-btn" style="background-color: #FFFF00;">Logout</a></span>
+							<span><a href="{% url 'myAccount' %}" class="get-start-btn" style="background-color: #00FF00;">myAccount</a></span>
+						{% else %}
+							<span><a href="{% url 'login' %}" class="get-start-btn" style="background-color: #FFFF00;">Login</a></span>
+							<span><a href="{% url 'registerUser' %}" class="cs-color cs-popup-joinus-btn login-popup ml-0">Register</a></span>
+						
+						<a class="get-start-btn" href="{% url 'registerVendor' %}">Register Restaurant</a>
+						{% endif %}
+					</div>
+				</div>
+
 					</div>
 				</div>
 			</div>

@@ -41,7 +41,7 @@ class MyUser(AbstractBaseUser):
     CUSTOMER=2
 
     ROLE_CHOICE=(
-        (VENDOR,'Restaurant'),
+        (VENDOR,'Vendor'),
         (CUSTOMER,'Customer'),
     )
 
@@ -83,6 +83,14 @@ class MyUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+    
+    def get_role(self):
+        if self.role==1:
+            user_role='Vendor'
+        elif self.role==2:
+            user_role='Customer'
+
+        return user_role
     
     # def set_password(self, raw_password):
     # # Override the set_password method to prevent password changes by admin

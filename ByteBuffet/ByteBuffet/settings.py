@@ -97,6 +97,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ByteBuffet.wsgi.application'
 
+# settings.py
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -147,6 +153,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ByteBuffet/static')]
+
 
 STATIC_ROOT =BASE_DIR /'static'
 
@@ -164,3 +172,4 @@ MEDIA_ROOT = BASE_DIR /'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.MyUser"
+EMAIL_FIELD = 'email'

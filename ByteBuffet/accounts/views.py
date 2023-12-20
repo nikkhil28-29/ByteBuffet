@@ -1,4 +1,9 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+import traceback
+
 from django.http import HttpResponse
 from .forms import UserForm
 from .models import MyUser ,UserProfile
@@ -31,7 +36,7 @@ def registerUser(request):
             user.role=MyUser.CUSTOMER
             user.save()
             
-            messages.success(request, "Your Accou t has been succesfull regsiterd🍻." )
+            messages.success(request, "Your Accout has been succesfull regsiterd🍻." )
             
         else:
             print("error")
@@ -47,43 +52,6 @@ def registerUser(request):
     return render(request, 'accounts/registrationUser.html', context)
 
 
-# def registerVendor(request):
-#     if request.method == "POST":
-#         form = UserForm(request.POST)
-#         v_form=VendorForm(request.POST,request.FILES)
-
-#         if form.is_valid() and v_form.is_valid():
-#             user = form.save(commit=False)
-#             user.role = MyUser.VENDOR
-#             user.save()
-
-#             # Save the vendor information
-#             vendor = v_form.save(commit=False)
-#             vendor.user = user  # Link the vendor to the user
-#             vendor.save()
-
-#             messages.success(request, "Vendor registration successful 🎉.")
-
-#             # return redirect('home')
-
-            
-#         else:
-#                 print("error")
-#                 messages.error(request, "Error. Form not sumitted😣.")
-
-
-
-#     else:
-#         form = UserForm()
-#         v_form=VendorForm()
-
-
-#         context={
-#             'form':form,
-#             'v_form':v_form,
-#         }
-
-#         return render(request,'accounts/registerVendor.html',context)
 
 def registerVendor(request):
    
@@ -126,3 +94,41 @@ def registerVendor(request):
     }
 
     return render(request, 'accounts/registerVendor.html', context)
+
+from django.contrib import auth
+from django.contrib import messages
+
+def login(request):
+    try:
+        if request.method == 'POST':
+            email = request.POST.get("email").strip()
+            password = request.POST.get("password").strip()
+
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                auth_login(request, user)
+                print("Email:", email)
+                print("Password:", password)
+                messages.success(request, 'Login successful.')
+                return redirect('dashboard')
+            else:
+                print("Email:", email)
+                print("Password:", password)
+                messages.error(request, 'Invalid email or password. Please try again.')
+        else:
+            return render(request, 'accounts/login.html')  # Add this line for GET requests
+    except Exception as e:
+        traceback.print_exc()
+        messages.error(request, 'An error occurred during login. Please try again.')
+    return render(request, 'accounts/login.html')
+ 
+@login_required(login_url='login')
+def user_logout(request):
+    logout(request)
+    messages.success(request, 'Logout successful.')
+    return redirect('home')
+
+
+@login_required(login_url='login')  
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')

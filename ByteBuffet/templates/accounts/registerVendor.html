@@ -12,9 +12,10 @@
                             <h4 class="text-center" style="margin-bottom: 0;">PARTNER WITH ByteBasket</h4>
                             <p class="text-center">Please fill this form to get yourself onboarded in the ByteBasket marketplace.</p>
                             <hr>
+                            
                             <div id="restaurant-sets-holder">
                                 <form action='{% url "registerVendor" %}' class="form-fields-set foodbakery-dev-restaurant-form" method="post" enctype="multipart/form-data"> 
-                                {% comment %} #enctyp="multipart/form-data" to receive file from form {% endcomment %}
+                                {% comment %} #enctyp="multipart/form-data" to receive file from Form.                      {% endcomment %}
 
                                     {% csrf_token %}
                                 

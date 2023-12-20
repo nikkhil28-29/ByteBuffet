@@ -72,14 +72,13 @@
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" >
 							<div class="login-option">
-								{% comment %} <a class="cs-color cs-popup-joinus-btn login-popup" data-target="#sign-in" data-toggle="modal" href="#user-register">Login /</a>
-								<a class="cs-color cs-popup-joinus-btn login-popup"  data-target="#sign-in" data-toggle="modal" href=" {% url 'registerUser' %}">Register</a>
-								<a class="get-start-btn"  href="{% url 'registerVendor' %}">
-									Register
-									Restaurant </a> {% endcomment %}
-
-									{% comment %} <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'login' %}">Login</a> /  {% endcomment %}
+							{% comment %} {% if user.is_authenticated %}
+							<span><a href="{% url 'logout' %}" class="get-start-btn" style="background-color: #FFFF00;"  >Logout</a></span>
+							{% else %} {% endcomment %}
+								
+                                <span><a href="{% url 'login' %}" class="get-start-btn" style="background-color: #FFFF00;"  >Login</a></span>
                                 <span><a href="{% url 'registerUser' %}" class="cs-color cs-popup-joinus-btn login-popup ml-0">Register</a></span>
+							{% comment %} {% endif %} {% endcomment %}
 								<a class="get-start-btn" href="{% url 'registerVendor' %}">
                                 Register
                                 Restaurant </a>

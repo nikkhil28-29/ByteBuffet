@@ -9,6 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from pathlib import Path
+
+from decouple import config, Config, Csv
+# config.read_env()
+                          
 import os
 from django.contrib.messages import constants as messages
 
@@ -35,8 +40,8 @@ MESSAGE_TAGS = {
 # ]
 
 
-from pathlib import Path
-from decouple import config # to store sensivetve info from this file 
+ 
+# to store sensivetve info from this file 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,7 +50,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY") # from pypi python decouple
+# SECRET_KEY = config("SECRET_KEY") # from pypi python decouple
+SECRET_KEY = config("SECRET_KEY") 
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool) # from pypi python decouple
@@ -64,7 +71,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts',
-    'vendor'
+    'vendor',
+    "verify_email.apps.VerifyEmailConfig"
 ]
 
 MIDDLEWARE = [
@@ -107,20 +115,6 @@ AUTHENTICATION_BACKENDS = [
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'ByteBuffet_db',
-        'USER':'postgres',
-        'PASSWORD':'nikhil2808',
-        'HOST':'localhost',
-        # 'NAME': config('DB_NAME'),
-        # 'USER':config('DB_USER'),
-        # 'PASSWORD':config('DB_PASSWORD'),
-        # "HOST":config('DB_HOST'),
-        'PORT':'5432'
-    }
-}
 
 
 # Password validation
@@ -171,6 +165,24 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ByteBuffet_db',
+        'USER': 'postgres',
+        'PASSWORD': 'nikhil2808',
+        'HOST': 'localhost',
+        'PORT': '5432',
+
+        # 'NAME': os.environ.get('DB_NAME'),
+        # 'USER':os.environ.get('DB_USER'),
+        # 'PASSWORD':os.environ.get('DB_PASSWORD'),
+        # "HOST":os.environ.get('DB_HOST') 
+    }
+}
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -178,3 +190,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.MyUser"
 EMAIL_FIELD = 'email'
+
+
+
+# # Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+DEBUG = True
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='bytebuffet00@gmail.com'
+EMAIL_HOST_PASSWORD ='pxjm jewx nmyu edcc'
+DEFAULT_FROM_EMAIL = 'bytebuffet00@gmail.com'
+
+
+
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+
+

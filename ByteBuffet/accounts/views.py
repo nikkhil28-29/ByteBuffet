@@ -3,9 +3,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required, user_passes_test
 import traceback
+from verify_email.email_handler import send_verification_email
+
+from django.contrib.auth.tokens import default_token_generator
+
+from django.utils.http import urlsafe_base64_decode
+
 from django.core.exceptions import PermissionDenied
 
-from .utils import detectUser
+from .utils import detectUser ,send_verification_email
 
 from django.http import HttpResponse
 from .forms import UserForm
@@ -21,14 +27,6 @@ def registerUser(request):
 
         if form.is_valid():
 
-            # password=form.cleaned_data['password']
-            # user=form.save(commit=False) # form is not yet submited , yet to submit
-
-            # user.set_password(password)
-
-            # user.role=MyUser.CUSTOMER
-            # user.save()
-
             first_name=form.cleaned_data['first_name']
             last_name=form.cleaned_data['last_name']
             username=form.cleaned_data['username']
@@ -38,6 +36,13 @@ def registerUser(request):
             user=MyUser.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
             user.role=MyUser.CUSTOMER
             user.save()
+
+            #send mail
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification.html'
+            
+
+            send_verification_email(request, user, mail_subject, email_template) #this function is made in utils 
             
             messages.success(request, "Your Accout has been succesfull regsiterd🍻." )
             
@@ -170,6 +175,21 @@ def customerdashboard(request):
 
 @login_required(login_url='login') 
 @user_passes_test(check_role_vendor)
-
 def vendordashboard(request):
     return render(request, 'accounts/vendordashboard.html')
+
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = MyUser._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, MyUser.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Congratulation! Your account is activated.')
+        return redirect('myAccount')
+    else:
+        messages.error(request, 'Invalid activation link')
+        return redirect('myAccount')

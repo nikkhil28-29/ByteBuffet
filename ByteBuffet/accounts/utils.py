@@ -24,28 +24,30 @@ def detectUser(user):
         return redirectUrl
     
 
-def send_verification_email(request,user,mail_subject, email_template):
+def send_verification_email(request,user,mail_subject, email_template): # afte it activating funvtion is in views.py
     from_email = settings.DEFAULT_FROM_EMAIL
-    # from_email = 'bytebuffet00@gmail.com'
+                                                                    # from_email = 'bytebuffet00@gmail.com'
 
 
-    current_site = get_current_site(request)
-    message = render_to_string(email_template,{
+    current_site = get_current_site(request)                        #Site object or a RequestSite object. This variable can be used to access the domain and name attributes of the current site.
+    message = render_to_string(email_template,{    
         'user':user,
         'domain':current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': default_token_generator.make_token(user),
+        'token': default_token_generator.make_token(user),          #The token is used to verify that the user is the one who requested the verification email
     })
     to_email=user.email
     print("FROM_EMAIL:", from_email)
     print("TO_EMAIL:", to_email)
 
     mail=EmailMessage(mail_subject,message,from_email,to=[to_email]) #package to send emil
-    mail.content_subtype='html'
+    mail.content_subtype='html'                                      # means that the message content is in HTML format and not plain text.
     try:
         mail.send()
         print("Email sent successfully!")
     except Exception as e:
         print(f"Error sending email: {e}")
     # mail.send()
-        
+  
+
+

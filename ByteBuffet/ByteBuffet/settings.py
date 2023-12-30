@@ -199,17 +199,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEBUG = True
 EMAIL_HOST = 'smtp.gmail.com'
-
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
-
 EMAIL_HOST_USER ='bytebuffet00@gmail.com'
 EMAIL_HOST_PASSWORD ='pxjm jewx nmyu edcc'
-DEFAULT_FROM_EMAIL = 'bytebuffet00@gmail.com'
+DEFAULT_FROM_EMAIL = 'ByteOfficial <bytebuffet00@gmail.com>'
 
 # EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')

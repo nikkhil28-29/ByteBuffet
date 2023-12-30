@@ -1,6 +1,6 @@
 {% autoescape off %}
 Hiii {{user.first_name}}
 please click the below link to activate
-http://{{domain}}{% url 'activate' uidb64=uid token=token%}
+<p>http://{{domain}}{% url 'activate' uidb64=uid token=token%}</p>
 
 {% endautoescape %}

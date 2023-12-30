@@ -55,7 +55,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool) # from pypi python decouple
+# DEBUG = config('DEBUG', default=False, cast=bool) # from pypi python decouple
 
 ALLOWED_HOSTS = []
 
@@ -195,13 +195,25 @@ EMAIL_FIELD = 'email'
 
 # # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #actiavteion link will be geneerated in termianl
 
 DEBUG = True
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+
 EMAIL_HOST_USER ='bytebuffet00@gmail.com'
 EMAIL_HOST_PASSWORD ='pxjm jewx nmyu edcc'
 DEFAULT_FROM_EMAIL = 'bytebuffet00@gmail.com'
+
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
 

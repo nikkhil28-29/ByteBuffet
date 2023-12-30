@@ -116,18 +116,19 @@ def login(request):
             return redirect('myAccount')
         
         elif request.method == 'POST':
-            email = request.POST.get("email").strip()
+            # email = request.POST.get("email").strip()
             password = request.POST.get("password").strip()
+            username = request.POST.get("username").strip()
 
-            user = authenticate(email=email, password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                print("Email:", email)
+                print("Email:", username)
                 print("Password:", password)
                 messages.success(request, 'Login successful.')
                 return redirect('myAccount')
             else:
-                print("Email:", email)
+                print("Email:", username)
                 print("Password:", password)
                 messages.error(request, 'Invalid email or password. Please try again.')
                 

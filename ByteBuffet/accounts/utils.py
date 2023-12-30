@@ -1,5 +1,7 @@
 from django.core.mail import send_mail
 from django.conf import settings
+from django.urls import reverse
+
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -12,13 +14,13 @@ from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 def detectUser(user):
     if user.role == 1:
-        redirectUrl = 'vendorDashboard'
+        redirectUrl =reverse('vendordashboard')
         return redirectUrl
     elif user.role == 2:
-        redirectUrl = 'customerDashboard'
+        redirectUrl =reverse('customerdashboard')
         return redirectUrl
     elif user.role == None and user.is_superadmin:
-        redirectUrl = '/admin'
+        redirectUrl = reverse('/admin')
         return redirectUrl
     
 

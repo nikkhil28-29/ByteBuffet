@@ -130,6 +130,7 @@ def login(request):
                 print("Email:", email)
                 print("Password:", password)
                 messages.error(request, 'Invalid email or password. Please try again.')
+                
         else:
             return render(request, 'accounts/login.html')  # Add this line for GET requests
     except Exception as e:

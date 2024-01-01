@@ -98,6 +98,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                #data will be shred from cover.html to,dashbard,profile and alllllll
+                'accounts.context_processors.get_vendor',
+                'accounts.context_processors.get_user_profile',
             ],
         },
     },

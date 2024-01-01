@@ -20,7 +20,7 @@ def detectUser(user):
         redirectUrl =reverse('customerdashboard')
         return redirectUrl
     elif user.role == None and user.is_superadmin:
-        redirectUrl = reverse('/admin')
+        redirectUrl = ('/admin')
         return redirectUrl
     
 

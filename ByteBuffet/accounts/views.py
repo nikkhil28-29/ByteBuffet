@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from .forms import UserForm
 from .models import MyUser ,UserProfile
 from vendor.forms import VendorForm
+from vendor.models import Vendor
 from django.contrib import messages #import messages
 
 
@@ -184,7 +185,11 @@ def customerdashboard(request):
 @login_required(login_url='login') 
 @user_passes_test(check_role_vendor)
 def vendordashboard(request):
-    return render(request, 'accounts/vendordashboard.html')
+    vendor=Vendor.objects.get(user=request.user)
+    context={
+        'vendor':vendor,
+    }
+    return render(request, 'accounts/vendordashboard.html',context)
 
 
 def activate(request, uidb64, token):

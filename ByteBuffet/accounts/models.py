@@ -124,6 +124,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+    # def full_address(self):
+    #     return f'{self.address_1} , {self.address_2}'
+    def full_address(self):
+    # Check if address_1 and address_2 are not None or empty
+        address_parts = [part for part in [self.address_1, self.address_2] if part]
+
+    # Join the non-empty parts with a comma and space
+        return ', '.join(address_parts)
 
 
 # post_save.connect(post_save_create_profile_receiver,sender=MyUser)

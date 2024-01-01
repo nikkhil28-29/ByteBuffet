@@ -11,4 +11,9 @@
     right: 20px;
     animation-name: show-toast;
     animation-duration: 5s;
+    z-index: 99;
+}
+.custom-alert-container {
+    max-width: 30px; /* Adjust the maximum width as needed */
+    margin: 0 ; /* Center the container horizontally */
 }

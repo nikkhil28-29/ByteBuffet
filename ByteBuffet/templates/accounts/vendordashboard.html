@@ -1,18 +1,17 @@
-vendor
+
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-<h3>Welcome {{user.username}}</h3>
-<p>This is  {{user.get_role}}</p>
-
 		
 		<!-- Main Section Start -->
 		<div class="main-section">
         {% include 'includes/cover.html' %}
+        
 			{% comment %} <div class="page-section restaurant-detail-image-section" style=" background: url({% static 'extra-images/banner-img.jpg' %}) no-repeat scroll 0 0 / cover;"> {% endcomment %}
 				<!-- Container Start -->
 				<div class="container">
+                
 					<!-- Row Start -->
 					{% comment %} <div class="row">
 						<!-- Column Start -->

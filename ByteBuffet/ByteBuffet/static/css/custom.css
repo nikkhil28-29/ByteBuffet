@@ -17,3 +17,6 @@
     max-width: 30px; /* Adjust the maximum width as needed */
     margin: 0 ; /* Center the container horizontally */
 }
+.main-section {
+    margin: 20px; 
+}

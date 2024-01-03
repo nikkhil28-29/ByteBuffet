@@ -72,6 +72,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'vendor',
+    'menu',
     "verify_email.apps.VerifyEmailConfig"
 ]
 

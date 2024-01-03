@@ -1,5 +1,5 @@
 {% load static %}
-helloo
+
 <div class="page-section restaurant-detail-image-section" style=" background: url({% if vendor.user_profile.cover_photo %} {{ vendor.user_profile.cover_photo.url }} {% else %} {% static 'images/default-cover.png' %}{% endif %}) no-repeat scroll 0 0 / cover; filter: brightness(1.5);">
     <!-- Container Start -->
     <div class="container">
@@ -24,7 +24,7 @@ helloo
                             <div class="text">
                                 {% comment %} {% if vendor.vendor_names %} {% endcomment %}
                                 <i class="icon-location"></i>
-                                <p>{{vendor.user_profile.full_address}}</p>
+                                <p>{{vendor.user_profile.address}}</p>
                                 {% comment %} {% endif %} {% endcomment %}
                             </div>
                         </div>

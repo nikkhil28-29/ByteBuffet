@@ -108,8 +108,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True, null=True)
     profile_pic = models.ImageField(upload_to='users/profile_pics/', blank=True, null=True)
     cover_photo = models.ImageField(upload_to='users/cover_photos/', blank=True, null=True)
-    address_1 = models.CharField(max_length=255, blank=True, null=True)
-    address_2 = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    # address_2 = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
@@ -127,12 +127,12 @@ class UserProfile(models.Model):
     
     # def full_address(self):
     #     return f'{self.address_1} , {self.address_2}'
-    def full_address(self):
-    # Check if address_1 and address_2 are not None or empty
-        address_parts = [part for part in [self.address_1, self.address_2] if part]
+    # def full_address(self):
+    # # Check if address_1 and address_2 are not None or empty
+    #     address_parts = [part for part in [self.address_1, self.address_2] if part]
 
     # Join the non-empty parts with a comma and space
-        return ', '.join(address_parts)
+        # return ', '.join(address_parts)
 
 
 # post_save.connect(post_save_create_profile_receiver,sender=MyUser)

@@ -104,6 +104,7 @@ def add_category(request):
         form = CategoryForm()
     context = {
         'form': form,
+
     }
     return render(request, 'vendor/add_category.html', context)
 
@@ -171,7 +172,7 @@ def add_food(request):
     else:
         form = FoodItemForm()
         # modify this form
-        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
+        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))  #show only that category of food whuch is added by u
     context = {
         'form': form,
     }

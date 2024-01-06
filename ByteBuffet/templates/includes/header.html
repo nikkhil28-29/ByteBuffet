@@ -6,7 +6,7 @@
 <!-- Header Start -->
 		<header id="header">
 			<div class="main-header">
-				<div class="container">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 							<div class="logo">
@@ -71,7 +71,11 @@
 								</div>
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-					<div class="login-option">
+						<div class="login-option">
+
+						<a href="{% url 'marketplace' %}" class="btn btn-outline-danger text-uppercase bold" style="background-color: #FFFF00;">MarketLPace </a>
+
+
 						{% if user.is_authenticated %}
 							<span><a href="{% url 'logout' %}" class="get-start-btn" style="background-color: #FFFF00;">Logout</a></span>
 							<span><a href="{% url 'myAccount' %}" class="get-start-btn" style="background-color: #00FF00;">myAccount</a></span>

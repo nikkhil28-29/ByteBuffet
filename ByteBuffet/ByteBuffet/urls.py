@@ -10,7 +10,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home,name='home'),
     path('', include('accounts.urls')),
-    path('verification/', include('verify_email.urls')),	
+    path('verification/', include('verify_email.urls')),
+    path('marketplace/', include('marketplace.urls')),	
 
 
 

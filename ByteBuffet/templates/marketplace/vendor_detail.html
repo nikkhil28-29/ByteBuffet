@@ -109,10 +109,10 @@
                                                 <div class="price-holder">
                                                     <span class="price">${{ food.price }}</span>
 
-                                                    <a href="#" class="decrease_cart" data-id="{{ food.id }}" data-url="{% url 'decrease_cart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
+                                                    <a href="#" class="decrease_cart" data-id="{{ food.id }}" data-url="{% url 'decrease_cart' food.id %}" style="margin-right: 28px;"><i class="bi bi-minus text-color">-</i></a>
                                                     <label id="qty-{{food.id}}">0</label>
-                                                    <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'add_to_cart' food.id %}"><i class="icon-plus4 text-color"></i></a>
-                                                    
+                                                    <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'add_to_cart' food.id %}"><i class="bi bi-plus-circle text-color"></i></a>
+                                                    {% comment %} data-id/data-url sent to custom.js     crate & when clicked ...ajax function should reach to add to cart f() {% endcomment %}
                                                 </div>
                                             </li>
                                             {% endfor %}
@@ -123,11 +123,7 @@
                                     </div>
 
                                     {% for item in cart_items %}
-
                                     <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
-
-                                    
-
                                     {% endfor %}
                                 </div>
                             </div>

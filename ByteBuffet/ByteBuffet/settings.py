@@ -57,7 +57,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=False, cast=bool) # from pypi python decouple
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.varcel.app']
 
 
 # Application definition
@@ -74,7 +74,9 @@ INSTALLED_APPS = [
     'vendor',
     'menu',
     'marketplace',
-    "verify_email.apps.VerifyEmailConfig"
+    "verify_email.apps.VerifyEmailConfig",
+
+   
 ]
 
 MIDDLEWARE = [
@@ -104,6 +106,7 @@ TEMPLATES = [
                 #data will be shred from cover.html to,dashbard,profile and alllllll
                 'accounts.context_processors.get_vendor',
                 'accounts.context_processors.get_user_profile',
+                'marketplace.context_processors.cart_counter'
             ],
         },
     },
@@ -174,11 +177,10 @@ MEDIA_ROOT = BASE_DIR /'media'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ByteBuffet_db',
-        'USER': 'postgres',
-        'PASSWORD': 'nikhil2808',
-        'HOST': 'localhost',
+        
         'PORT': '5432',
+         
+        
 
         # 'NAME': os.environ.get('DB_NAME'),
         # 'USER':os.environ.get('DB_USER'),
@@ -186,6 +188,7 @@ DATABASES = {
         # "HOST":os.environ.get('DB_HOST') 
     }
 }
+
 
 
 
@@ -203,14 +206,6 @@ EMAIL_FIELD = 'email'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #actiavteion link will be geneerated in termianl
 
-DEBUG = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
-EMAIL_HOST_USER ='bytebuffet00@gmail.com'
-EMAIL_HOST_PASSWORD ='pxjm jewx nmyu edcc'
-DEFAULT_FROM_EMAIL = 'ByteOfficial <bytebuffet00@gmail.com>'
 
 # EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
@@ -218,10 +213,17 @@ DEFAULT_FROM_EMAIL = 'ByteOfficial <bytebuffet00@gmail.com>'
 
 
 
+
+
+
+
 # EMAIL_HOST = os.environ.get('EMAIL_HOST')
 # EMAIL_PORT = os.environ.get('EMAIL_PORT')
 # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')\
+
+
+GOOGLE_API_KEY=''
 
 

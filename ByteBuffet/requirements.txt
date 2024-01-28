@@ -6,6 +6,7 @@ async-timeout==4.0.3
 attrs==23.1.0
 certifi==2023.11.17
 charset-normalizer==3.3.2
+decouple==0.0.7
 Django==4.2.7
 Django-Verify-Email==2.0.3
 dnspython==2.4.2
@@ -18,7 +19,7 @@ psycopg2 @ git+https://github.com/psycopg/psycopg2.git@5fb59cd6eebd96e2c8a69a3a9
 psycopg2-binary==2.9.9
 PyJWT==2.8.0
 python-decouple==3.8
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 python-slugify==8.0.1
 requests==2.31.0
 sqlparse==0.4.4

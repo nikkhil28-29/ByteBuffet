@@ -11,8 +11,20 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 
-from decouple import config, Config, Csv
+# from decouple import config, Config, Csv
 # config.read_env()
+
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
+
                           
 import os
 from django.contrib.messages import constants as messages
@@ -50,16 +62,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config("SECRET_KEY") # from pypi python decouple
-SECRET_KEY = config("SECRET_KEY") 
+# SECRET_KEY ="5175367e5392f3b335570a869ea2b9c63b39d955ca9e58815ec53658e00a9cb9"
+#  config("SECRET_KEY") # from pypi python decouple
+
+SECRET_KEY = os.environ.get("SECRET_KEY") 
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=False, cast=bool) # from pypi python decouple
 
-ALLOWED_HOSTS = ['.varcel.app']
-
-
+ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -177,15 +189,15 @@ MEDIA_ROOT = BASE_DIR /'media'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        
         'PORT': '5432',
-         
-        
 
-        # 'NAME': os.environ.get('DB_NAME'),
-        # 'USER':os.environ.get('DB_USER'),
-        # 'PASSWORD':os.environ.get('DB_PASSWORD'),
-        # "HOST":os.environ.get('DB_HOST') 
+       
+
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+
     }
 }
 
@@ -207,15 +219,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #actiavteion link will be geneerated in termianl
 
 
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+DEBUG = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
 
 
 
-
-
-
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 # EMAIL_HOST = os.environ.get('EMAIL_HOST')
 # EMAIL_PORT = os.environ.get('EMAIL_PORT')

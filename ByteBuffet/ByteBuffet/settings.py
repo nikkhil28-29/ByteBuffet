@@ -215,7 +215,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #actiavteion link will be geneerated in termianl
 
 
-DEBUG = True
+# DEBUG = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True

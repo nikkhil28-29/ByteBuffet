@@ -3,8 +3,9 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,User
 from django.db.models.fields.related import OneToOneField
 from django.conf import settings
 
-class MyUserManager(BaseUserManager): #it does not contain any fields ,,,it will contain only merhods
-    def create_user(self, email, first_name,last_name, username,password=None):
+class MyUserManager(BaseUserManager):
+    def create_user(self, email, first_name, last_name, username, password=None):
+
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -13,7 +14,6 @@ class MyUserManager(BaseUserManager): #it does not contain any fields ,,,it will
             raise ValueError("Users must have an email address")
         if not username:
             raise ValueError("username must have an username")
-
 
         user = self.model(email=self.normalize_email(email), first_name=first_name, last_name=last_name,username=username)
 
@@ -26,7 +26,7 @@ class MyUserManager(BaseUserManager): #it does not contain any fields ,,,it will
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
-        user = self.create_user(email, password=password, first_name=first_name, last_name=last_name,username=username)
+        user = self.create_user(self.normalize_email(email), password=password, first_name=first_name, last_name=last_name,username=username)
         user.is_admin = True
         user.is_active=True
         user.is_staff=True
@@ -45,8 +45,7 @@ class MyUser(AbstractBaseUser):
         (CUSTOMER,'Customer'),
     )
 
-
-    email = models.EmailField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50,unique=True)
@@ -67,7 +66,7 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["first_name","last_name",]
+    REQUIRED_FIELDS = ['email',"first_name","last_name",]
 
 
     def __str__(self):
@@ -90,17 +89,6 @@ class MyUser(AbstractBaseUser):
             user_role='Customer'
 
         return user_role
-    
-    # def set_password(self, raw_password):
-    # # Override the set_password method to prevent password changes by admin
-    #     if self.id is not None and self.is_admin:
-    #         return  # Do not allow password changes by admin
-    #     super().set_password(raw_password)
-    # @property
-    # def is_staff(self):
-    #     "Is the user a member of staff?"
-    #     # Simplest possible answer: All admins are staff
-    #     return self.is_admin
 
 
 
@@ -125,14 +113,3 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.email
     
-    # def full_address(self):
-    #     return f'{self.address_1} , {self.address_2}'
-    # def full_address(self):
-    # # Check if address_1 and address_2 are not None or empty
-    #     address_parts = [part for part in [self.address_1, self.address_2] if part]
-
-    # Join the non-empty parts with a comma and space
-        # return ', '.join(address_parts)
-
-
-# post_save.connect(post_save_create_profile_receiver,sender=MyUser)

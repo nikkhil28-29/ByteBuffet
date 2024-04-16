@@ -15,17 +15,14 @@ from pathlib import Path
 # config.read_env()
 # from verify_email.apps import VerifyEmailConfig
 
-
 import os
 from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
 
-
 # Load environment variables from .env file
 load_dotenv()
 
-SECRET_KEY = '(#@iq06z7g+usy(o7ieqk6#753$)eskw1xx+)bw-hhwjje*@jk'
-# os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 if not SECRET_KEY:
     raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
@@ -48,7 +45,6 @@ MESSAGE_TAGS = {
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # STATIC_URL = '/static/'
-
 # # Use os.path.join to create an absolute path for STATIC_ROOT
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -56,8 +52,6 @@ MESSAGE_TAGS = {
 #     os.path.join(BASE_DIR, 'ByteBuffet/static'),
 # ]
 
-
- 
 # to store sensivetve info from this file 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,8 +59,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -167,7 +159,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -196,7 +187,6 @@ DATABASES = {
     }
 }
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 DEBUG=True
@@ -218,18 +208,8 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 
-
-
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
-# EMAIL_HOST = os.environ.get('EMAIL_HOST')
-# EMAIL_PORT = os.environ.get('EMAIL_PORT')
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')\
-
-
 GOOGLE_API_KEY=''
-

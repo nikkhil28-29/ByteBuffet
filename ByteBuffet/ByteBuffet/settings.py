@@ -13,14 +13,19 @@ from pathlib import Path
 
 # from decouple import config, Config, Csv
 # config.read_env()
+# from verify_email.apps import VerifyEmailConfig
+
 
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
+
 
 # Load environment variables from .env file
 load_dotenv()
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = '(#@iq06z7g+usy(o7ieqk6#753$)eskw1xx+)bw-hhwjje*@jk'
+# os.environ.get("SECRET_KEY")
 
 if not SECRET_KEY:
     raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
@@ -82,9 +87,7 @@ INSTALLED_APPS = [
     'vendor',
     'menu',
     'marketplace',
-    "verify_email.apps.VerifyEmailConfig",
-
-   
+    "verify_email"
 ]
 
 MIDDLEWARE = [
@@ -186,23 +189,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'PORT': '5432',
-
-       
-
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-
     }
 }
 
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
+DEBUG=True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.MyUser"
@@ -235,5 +232,4 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 
 GOOGLE_API_KEY=''
-
 

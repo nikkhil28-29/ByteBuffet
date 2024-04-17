@@ -87,12 +87,12 @@ class MyUser(AbstractBaseUser):
             user_role='Vendor'
         elif self.role==2:
             user_role='Customer'
-
         return user_role
 
 
-
+# //profile
 class UserProfile(models.Model):
+    # one to one with with another model MyUser
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True, null=True)
     profile_pic = models.ImageField(upload_to='users/profile_pics/', blank=True, null=True)
     cover_photo = models.ImageField(upload_to='users/cover_photos/', blank=True, null=True)
@@ -106,8 +106,6 @@ class UserProfile(models.Model):
     longitude = models.FloatField(max_length=20,blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-
-
 
 
     def __str__(self):

@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 import traceback
 from verify_email.email_handler import send_verification_email
@@ -35,14 +34,12 @@ def registerUser(request):
             password=form.cleaned_data['password']
 
             user=MyUser.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
-            user.role=MyUser.CUSTOMER
+            user.role=MyUser.CUSTOMER    ## impr
             user.save()
 
             #send mail
             mail_subject = 'Please activate your account'
             email_template = 'accounts/emails/account_verification.html'
-            
-
             send_verification_email(request, user, mail_subject, email_template) #this function is made in utils 
             
             messages.success(request, "Your Accout has been succesfull regsiterd🍻." )
@@ -94,7 +91,6 @@ def registerVendor(request):
             mail_subject = 'Please activate your account'
             email_template = 'accounts/emails/account_verification.html'
             
-
             send_verification_email(request, user, mail_subject, email_template)
 
             messages.success(request, 'Your account has been registered sucessfully! Please wait for the approval.')
@@ -134,7 +130,7 @@ def login(request):
                 print("Email:", username)
                 print("Password:", password)
                 messages.success(request, 'Login successful.')
-                return redirect('myAccount')
+                return redirect('myAccount')     # my accountT view function is created below
             else:
                 print("Email:", username)
                 print("Password:", password)
@@ -154,12 +150,10 @@ def user_logout(request):
     return redirect('home')
 
 @login_required(login_url='login')
-def myAccount(request):
+def myAccount(request):               #redirect to customer/vendor dashboard
     user = request.user
-    redirectUrl = detectUser(user)
+    redirectUrl = detectUser(user)    #detectUser is in utils.py(helper.py)
     return redirect(redirectUrl)
-
-
 
 # Restrict the vendor from accessing the customer page
 def check_role_vendor(user):
@@ -168,7 +162,6 @@ def check_role_vendor(user):
     else:
         raise PermissionDenied
 
-
 # Restrict the customer from accessing the vendor page
 def check_role_customer(user):
     if user.role == 2:
@@ -176,10 +169,8 @@ def check_role_customer(user):
     else:
         raise PermissionDenied
 
-
-
 @login_required(login_url='login')  
-@user_passes_test(check_role_customer)
+@user_passes_test(check_role_customer)   #made  check_role_customer above 
 def customerdashboard(request):
     return render(request, 'accounts/customerdashboard.html')
 
@@ -191,7 +182,6 @@ def vendordashboard(request):
         'vendor':vendor,
     }
     return render(request, 'accounts/vendordashboard.html',context)
-
 
 def activate(request, uidb64, token):
     try:
@@ -209,9 +199,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation link')
         return redirect('myAccount')
     
-
-
-   
+  
 #forgot password
 def forgot_password(request):
     if request.method == 'POST':

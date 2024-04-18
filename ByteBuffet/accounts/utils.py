@@ -26,9 +26,8 @@ def detectUser(user):
 
 def send_verification_email(request,user,mail_subject, email_template): # afte it activating funvtion is in views.py
     from_email = settings.DEFAULT_FROM_EMAIL
-                                                                    # from_email = 'bytebuffet00@gmail.com'
+                                                                    # from_email = 'XXXXXXX@gmail.com'
     
-
     current_site = get_current_site(request)                        #Site object or a RequestSite object. This variable can be used to access the domain and name attributes of the current site.
     message = render_to_string(email_template,{    
         'user':user,
@@ -92,14 +91,7 @@ def send_notification_approve(mail_subject, mail_template, context):
 
     except Exception as e:
         print(f"Error sending email: {e}")
-    # mail=EmailMessage(mail_subject,message,from_email,to=[to_email]) #package to send emil
-    # mail.content_subtype='html'                                      # means that the message content is in HTML format and not plain text.
-    # try:
-    #     mail.send()
-    #     print("Email sent successfully!")
-    # except Exception as e:
-    #     print(f"Error sending email: {e}")
-    # # mail.send()
+    
   
 
     

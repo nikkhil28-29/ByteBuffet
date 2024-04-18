@@ -14,6 +14,7 @@ urlpatterns=[
     path("logout/",views.user_logout,name='logout'),
 
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    #when u will the link sent in mail
 
 
     path("myaccount/",views.myAccount,name='myAccount'),
@@ -25,8 +26,6 @@ urlpatterns=[
     path('reset_password/', views.reset_password, name='reset_password'),
 
     path('vendor/', include('vendor.urls')),
-
-
 
 ]
 

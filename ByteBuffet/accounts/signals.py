@@ -6,15 +6,16 @@ from .models import MyUser,UserProfile
 def post_save_create_profile_receiver(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-        print('user profilr')
+        print('user profile')
 
     else:
+        #if not creted means may be updates
         try:
             profile=UserProfile.objects.get(user=instance)
             print("user profile is created")
         except:
             UserProfile.objects.create(user=instance)
-            print("profile was not exist , But i ceated one")
+            print("profile was not exist , But i created one")
         print('User is updated')
 
 

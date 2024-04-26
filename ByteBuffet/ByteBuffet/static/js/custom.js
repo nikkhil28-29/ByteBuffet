@@ -82,21 +82,23 @@ $(document).ready(function(){
         food_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
         
-       
         $.ajax({
             type: 'GET',    // get the resposne from teh views.
             url: url,
+            cache: false,
             success: function(response){
                 console.log(response)
-                // if(response.status == 'login_required'){
-                //     swal(response.message, '', 'info').then(function(){
-                //         window.location = '/login';
-                //     })
-                // }else if(response.status == 'Failed'){
-                //     swal(response.message, '', 'error')
-                // }else{
-                //     $('#cart_counter').html(response.cart_counter['cart_count']);
-                //     $('#qty-'+food_id).html(response.qty);
+                if(response.status == 'login_required'){
+                    swal(response.message, '', 'info').then(function(){
+                        window.location = '/login';
+                    })
+                }else if(response.status == 'Failed'){
+                    swal(response.message, '', 'error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+food_id).html(response.qty);
+                }
+
 
                 //     // subtotal, tax and grand total
                 //     applyCartAmounts(
@@ -111,11 +113,12 @@ $(document).ready(function(){
 
 
     // place the cart item quantity on load
-    $('.item_qty').each(function(){
+    $('.item_qty').each(function(){            //class-item_qty, to calculate the  quantity
         var the_id = $(this).attr('id')
         var qty = $(this).attr('data-qty')
         $('#'+the_id).html(qty)
     })
+
 
     // decrease cart
     $('.decrease_cart').on('click', function(e){
@@ -125,34 +128,33 @@ $(document).ready(function(){
         url = $(this).attr('data-url');
         cart_id = $(this).attr('id');
         
-        
         $.ajax({
             type: 'GET',
             url: url,
             success: function(response){
                 console.log(response)
-                if(response.status == 'login_required'){
-                    swal(response.message, '', 'info').then(function(){
-                        window.location = '/login';
-                    })
-                }else if(response.status == 'Failed'){
-                    swal(response.message, '', 'error')
-                }else{
-                    $('#cart_counter').html(response.cart_counter['cart_count']);
-                    $('#qty-'+food_id).html(response.qty);
+                // if(response.status == 'login_required'){
+                //     swal(response.message, '', 'info').then(function(){
+                //         window.location = '/login';
+                //     })
+                // }else if(response.status == 'Failed'){
+                //     swal(response.message, '', 'error')
+                // }else{
+                //     $('#cart_counter').html(response.cart_counter['cart_count']);
+                //     $('#qty-'+food_id).html(response.qty);
 
-                    applyCartAmounts(
-                        response.cart_amount['subtotal'],
-                        response.cart_amount['tax_dict'],
-                        response.cart_amount['grand_total']
-                    )
+                //     applyCartAmounts(
+                //         response.cart_amount['subtotal'],
+                //         response.cart_amount['tax_dict'],
+                //         response.cart_amount['grand_total']
+                //     )
 
-                    if(window.location.pathname == '/cart/'){
-                        removeCartItem(response.qty, cart_id);
-                        checkEmptyCart();
-                    }
+                //     if(window.location.pathname == '/cart/'){
+                //         removeCartItem(response.qty, cart_id);
+                //         checkEmptyCart();
+                //     }
                     
-                } 
+                // } 
             }
         })
     })

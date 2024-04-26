@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.cache import never_cache
+
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Prefetch
 from .context_processors import cart_counter, get_cart_amounts
@@ -27,7 +31,7 @@ def vendor_detail(request, vendor_slug):
         Prefetch(
             'fooditems',
             queryset = FoodItem.objects.filter(is_available=True)
-        )
+        ) 
     )
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
@@ -40,66 +44,74 @@ def vendor_detail(request, vendor_slug):
     }
     return render(request, 'marketplace/vendor_detail.html',context)
 
-def add_to_cart(request, food_id):    #from ajax
-    if request.user.is_authenticated:
-        print(request.user.email)
-        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-
-            print(food_id)
-        # headers.get('x-requested-with') == 'XMLHttpRequest':  #whether the requested is an AJAX request.
-            try:
-                fooditem = FoodItem.objects.get(id=food_id)
-                print(fooditem.category)
-
-                try:
-                    CheckKart = Cart.objects.get(user=request.user, fooditem=fooditem)
-
-                    CheckKart.quantity += 1
-                    CheckKart.save()
-                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
-                except:
-                    CheckKart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
-                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
-            except:
-                return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
-        else:
-            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-        
-    else:
-        return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
-
-# def add_to_cart(request, food_id):
+# def add_to_cart(request, food_id):    #from ajax
 #     if request.user.is_authenticated:
-#         print("Received food_id:", food_id)  # Log the received food_id
+#         print(request.user.email)
 #         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-#             print("Received food_id:", food_id)
+
+#             print(food_id)
+#         # headers.get('x-requested-with') == 'XMLHttpRequest':  #whether the requested is an AJAX request.
 #             try:
-#                 # Check if the FoodItem exists in the database
-#                 fooditem = get_object_or_404(FoodItem, id=food_id)
-#                 print("FoodItem categories:", fooditem.category)  # Log the retrieved FoodItem
+#                 fooditem = FoodItem.objects.get(id=food_id)
+#                 print(fooditem.category)
+#                 print(fooditem.food_title)
 
-#                 # Proceed with adding to cart or increasing quantity
-#                 # Your existing logic for adding to cart goes here
-#                 return JsonResponse({'status': 'Success', 'message': 'Food added to cart successfully.'})
+#                 try:
+#                     CheckKart = Cart.objects.get(user=request.user, fooditem=fooditem)
+#                     print(CheckKart.quantity)
 
-
+#                     CheckKart.quantity += 1
+#                     CheckKart.save()
+#                     return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
+                    
+#                 except ObjectDoesNotExist:
+#                     CheckKart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
+#                     return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
 #             except FoodItem.DoesNotExist:
-#                 # If FoodItem does not exist, return a failure response
 #                 return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
-
 #             except Exception as e:
-#                 # Log any other exceptions for debugging purposes
-#                 print("An error occurred:", str(e))
-#                 # Return an appropriate failure response
-#                 return JsonResponse({'status': 'Failed', 'message': 'An error occurred while processing your request.'})
-
+#                 print(e)  
 #         else:
 #             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-
+        
 #     else:
 #         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
 
+@never_cache
+def add_to_cart(request, food_id):
+    if request.user.is_authenticated:
+        print(request.user.email)
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            print(food_id)
+            try:
+                fooditem = FoodItem.objects.get(id=food_id)
+                print(fooditem.category)
+                print(fooditem.food_title)
 
+                try:
+                    CheckKart = Cart.objects.get(user=request.user, fooditem=fooditem)
+                    print(CheckKart.quantity)
+
+                    CheckKart.quantity += 1
+                    CheckKart.save()
+                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
+                    
+                except ObjectDoesNotExist:
+                    CheckKart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
+                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
+                    #  'cart_amount': get_cart_amounts(request)
+#  'cart_amount': get_cart_amounts(request)
+            except FoodItem.DoesNotExist:
+                return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
+            except Exception as e:
+                print(e)
+                return JsonResponse({'status': 'Failed', 'message': 'An error occurred!'})
+        else:
+            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
+    else:
+        return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
+
+@never_cache
 def decrease_cart(request, food_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -114,7 +126,7 @@ def decrease_cart(request, food_id):
                     else:
                         CheckKart.delete()
                         CheckKart.quantity = 0
-                    return JsonResponse({'status': 'Success', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
+                    return JsonResponse({'status': 'Success', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
                 except:
                     return JsonResponse({'status': 'Failed', 'message': 'You do not have this item in your cart!'})
             except:

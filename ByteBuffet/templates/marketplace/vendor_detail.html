@@ -74,8 +74,8 @@
                         <div class="categories-menu">
                             <h6><i class="icon-restaurant_menu"></i>Categories</h6>
                             <ul class="menu-list">
-                                {% for category in categories %}
-                                <li class="active"><a href="#" class="menu-category-link"> {{ category }} </a></li>
+                                {% for i in categories %}
+                                <li class="active"><a href="#" class="menu-category-link"> {{ i }} </a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -93,13 +93,13 @@
                                     
                                     <div id="menu-item-list-6272" class="menu-itam-list">
                                         
-                                        {% for category in categories %}
+                                        {% for i in categories %}
                                         <div class="element-title" id="menu-category-2">
-                                            <h5 class="text-color">{{ category }}</h5>
-                                            <span>{{ category.description }}</span>
+                                            <h5 class="text-color">{{ i }}</h5>
+                                            <span>{{ i.description }}</span>
                                         </div>
                                         <ul>
-                                            {% for food in category.fooditems.all %}
+                                            {% for food in i.fooditems.all %}
                                             <li>
                                                 <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
                                                 <div class="text-holder">
@@ -113,7 +113,7 @@
                                                     <label id="qty-{{food.id}}">0</label>
                                                     {% comment %} dynamic id of qty-food.id {% endcomment %}
                                                     <a href="#" class="add_to_cart" data-id="{{ food.id }}" data-url="{% url 'add_to_cart' food.id %}"><i class="bi bi-plus-circle text-color">+</i></a>
-                                                    {% comment %} d  ata-id/data-url sent to custom.js, by the class specific     crate & when clicked ...ajax function should reach to add to cart f() {% endcomment %}
+                                                    {% comment %} d  ata-id/data-url sent to .js, by the class specific     crate & when clicked ...ajax function should reach to add to cart f() {% endcomment %}
                                                 </div>
                                             </li>
                                             {% endfor %}
@@ -121,7 +121,7 @@
                                         </ul>
                                         {% endfor %}
                                         
-                                    </div>
+                                    </div> 
 
                                     {% for item in cart_items %}
                                     <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>

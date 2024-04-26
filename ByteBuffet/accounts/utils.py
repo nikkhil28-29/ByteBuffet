@@ -59,6 +59,7 @@ def check(email):
         print(str(e))
 
 
+#when the vendor is approved by admin.
 def send_notification_approve(mail_subject, mail_template, context):
 
     from_email = settings.DEFAULT_FROM_EMAIL
@@ -73,13 +74,8 @@ def send_notification_approve(mail_subject, mail_template, context):
 
         print("FROM_EMAIL:", from_email)
         print("TO_EMAIL:", to_email)
-        # email = validate_email(to_email).email
-        # print("True")
-        # print(str(e))
-
 
     try:
-        # Validate email if it's a string
         if isinstance(to_email, str):
             email = validate_email(to_email).email
             to_email = [email]
@@ -91,9 +87,3 @@ def send_notification_approve(mail_subject, mail_template, context):
 
     except Exception as e:
         print(f"Error sending email: {e}")
-    
-  
-
-    
-
-

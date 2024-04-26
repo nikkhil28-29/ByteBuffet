@@ -14,7 +14,7 @@ urlpatterns=[
     path("logout/",views.user_logout,name='logout'),
 
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
-    #when u will the link sent in mail
+    #when u will the link sent in mail for activation
 
 
     path("myaccount/",views.myAccount,name='myAccount'),

@@ -11,7 +11,7 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:                                            # metadata (additional parameters) about the model, bedault ddjnago save models in plural
+    class Meta:                                            # metadata (additional parameters) about the model, bydefault djnago save models in plural
         verbose_name = 'category'
         verbose_name_plural = 'categories'                 #telling to djnago administration to save models the plural name of category as categories
 

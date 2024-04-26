@@ -171,8 +171,10 @@ def check_role_customer(user):
 
 @login_required(login_url='login')  
 @user_passes_test(check_role_customer)   #made  check_role_customer above 
+
 def customerdashboard(request):
     return render(request, 'accounts/customerdashboard.html')
+    
 
 @login_required(login_url='login') 
 @user_passes_test(check_role_vendor)
@@ -199,7 +201,6 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation link')
         return redirect('myAccount')
     
-  
 #forgot password
 def forgot_password(request):
     if request.method == 'POST':

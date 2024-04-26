@@ -10,8 +10,6 @@ from accounts.models import UserProfile
 from accounts.forms import UserProfileForm
 from django.shortcuts import render, get_object_or_404, redirect
 
-
-
 from django.contrib.auth.decorators import login_required, user_passes_test
 from accounts.views import check_role_vendor
 # Create your views here.
@@ -93,7 +91,7 @@ def add_category(request):
             category.vendor = get_vendor(request)
             
             category.save() # here the category id will be generated
-            category.slug = slugify(category_name)+'-'+str(category.id) # chicken-15
+            category.slug = slugify(category_name)+'-'+str(category.id) # maggie-15
             category.save()
             messages.success(request, 'Category added successfully!')
             return redirect('menu_builder')
@@ -152,11 +150,9 @@ def delete_category(request,pk=None):
 
 
 #CRUD on FOOd
-
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def add_food(request):
-    
     if request.method == 'POST':
         form = FoodItemForm(request.POST, request.FILES)
         if form.is_valid():
@@ -200,6 +196,8 @@ def edit_food(request, pk=None):
 
     else:
         form = FoodItemForm(instance=food)
+
+        #while adding food by a vendor, it should show only my added categories .(not all the categories added by others also)
         form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
     context = {
         'form': form,

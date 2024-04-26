@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path,include
 from . import views
@@ -13,6 +12,6 @@ urlpatterns = [
     path('verification/', include('verify_email.urls')),
     path('marketplace/', include('marketplace.urls')),	
 
-
+    # path('cart/', MarketPlace.views)
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

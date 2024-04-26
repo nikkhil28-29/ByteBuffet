@@ -1,6 +1,6 @@
 from django import forms
 from .models import UserProfile,MyUser
-from .validators import allow_only_images_validator
+from .validators import allow_only_images_validator    #from account.py 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _

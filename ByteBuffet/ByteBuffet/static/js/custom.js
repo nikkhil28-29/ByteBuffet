@@ -138,41 +138,19 @@ sweetAlertScript.onload = function() {
 
         }
 
-
-
-    //     function removeCartItem(cartItemQty, cart_id){
-    //         if(cartItemQty <= 0){
-    //             // remove the cart item element from html, f.end()
-    //             document.getElementById("cart-item-"+cart_id).remove()
-    //         }
-        
-    // }
-
-    // // Check  cart is empty ???
-    // function checkEmptyCart(){
-    //     var cart_counter = document.getElementById('cart_counter').innerHTML
-    //     if(cart_counter == 0){
-    //         document.getElementById("empty-cart").style.display = "block";
-    //     }
-    // }
-
     });
 };
 
-
-
-
 let autocomplete;
 
-function initAutoComplete(){
+function initAutoComplete(){             // present in <script> src of google, atocompkete in avse.html>
 autocomplete = new google.maps.places.Autocomplete(
     document.getElementById('id_address'),
     {
         types: ['geocode', 'establishment'],
-        //default in this app is "IN" - add your country code
         componentRestrictions: {'country': ['in']},
     })
-// function to specify what should happen when the prediction is clicked
+       //when the prediction is clicked , 
 autocomplete.addListener('place_changed', onPlaceChanged);
 }
 

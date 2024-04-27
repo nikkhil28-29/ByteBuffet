@@ -110,7 +110,9 @@ TEMPLATES = [
                 #data will be shred from cover.html to,dashbard,profile and alllllll
                 'accounts.context_processors.get_vendor',
                 'accounts.context_processors.get_user_profile',
-                'marketplace.context_processors.cart_counter'
+                'marketplace.context_processors.cart_counter',
+                'marketplace.context_processors.get_cart_amounts',
+                'marketplace.context_processors.get_map_api',
             ],
         },
     },
@@ -211,4 +213,4 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
-GOOGLE_API_KEY=''
+GOOGLE_API_KEY= os.environ.get('GOOGLE_API_KEY')

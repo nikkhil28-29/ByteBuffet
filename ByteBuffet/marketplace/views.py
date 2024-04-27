@@ -94,11 +94,11 @@ def add_to_cart(request, food_id):
 
                     CheckKart.quantity += 1
                     CheckKart.save()
-                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
+                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount':get_cart_amounts(request)})
                     
                 except ObjectDoesNotExist:
                     CheckKart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
-                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
+                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount':get_cart_amounts(request)})
                     #  'cart_amount': get_cart_amounts(request)
 #  'cart_amount': get_cart_amounts(request)
             except FoodItem.DoesNotExist:
@@ -126,7 +126,7 @@ def decrease_cart(request, food_id):
                     else:
                         CheckKart.delete()
                         CheckKart.quantity = 0
-                    return JsonResponse({'status': 'Success', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity})
+                    return JsonResponse({'status': 'Success', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount':get_cart_amounts(request)})
                 except:
                     return JsonResponse({'status': 'Failed', 'message': 'You do not have this item in your cart!'})
             except:
@@ -137,7 +137,7 @@ def decrease_cart(request, food_id):
     else:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
 
-
+@never_cache
 @login_required(login_url = 'login')
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user).order_by('created_at')   #order by creaed at while listing it
@@ -146,7 +146,7 @@ def cart(request):
     }
     return render(request, 'marketplace/cart.html', context)
 
-
+@never_cache
 def delete_cart(request, cart_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -154,10 +154,8 @@ def delete_cart(request, cart_id):
                 cart_item = Cart.objects.get(user=request.user, id=cart_id)
                 if cart_item:
                     cart_item.delete()
-                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!', 'cart_counter': cart_counter(request), 'cart_amount': get_cart_amounts(request)})
+                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!', 'cart_amount':get_cart_amounts(request)})
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'Cart Item does not exist!'})
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-
-

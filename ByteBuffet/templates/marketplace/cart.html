@@ -33,6 +33,7 @@
                                                         <h6>{{ item.fooditem }}</h6>
                                                         <span>{{ item.fooditem.description }}</span>
                                                         <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{ item.fooditem.vendor }}</a>
+                                                        {% comment %} name of restaurane below food {% endcomment %}
                                                     </div>
                                                     <div class="price-holder">
                                                         <span class="price">${{ item.fooditem.price }}</span>
@@ -40,6 +41,7 @@
                                                         <a href="#" class="decrease_cart" data-id="{{ item.fooditem.id }}" id="{{item.id}}" data-url="{% url 'decrease_cart' item.fooditem.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
                                                         <label id="qty-{{item.fooditem.id}}">0</label>
                                                         <a href="#" class="add_to_cart" data-id="{{ item.fooditem.id }}" data-url="{% url 'add_to_cart' item.fooditem.id %}"><i class="icon-plus4 text-color"></i></a>
+                                                        {% comment %} delete the cart {% endcomment %}
                                                         <a href="#" class="delete_cart" data-id="{{ item.id }}" data-url="{% url 'delete_cart' item.id %}"><i class="icon-delete text-color"></i></a>
                                                         
                                                     </div>
@@ -85,11 +87,12 @@
                                                 Subtotal
                                                 <span class="price float-right">
                                                     <span class="currency">$</span>
-                                                    <span id="subtotal">{{ subtotal }}</span>
+                                                    <span id="subtotal">{{subtotal}}</span>   
+                                                    {% comment %} //diretly fom context_processor, dict[] {% endcomment %}
                                                 </span>
                                             </li>
 
-                                            {% for key, value in tax_dict.items %}
+                                            {% comment %} {% for key, value in tax_dict.items %}
                                                 {% for i, j in value.items %}
                                                     <li style="list-style-type: none;">
                                                         {{ key }} <small>({{ i }}%)</small>
@@ -99,14 +102,22 @@
                                                         </span>
                                                     </li>
                                                 {% endfor %}
-                                            {% endfor %}
+                                            {% endfor %} {% endcomment %}
+
+                                            <li style="list-style-type: none; font-weight: 600;">
+                                                TAxx
+                                                <span class="price float-right">
+                                                    <span class="currency">$</span>
+                                                    <span id="tax">0</span>
+                                                </span>
+                                            </li>
 
 
                                             <li style="list-style-type: none; font-weight: 600;">
                                                 TOTAL
                                                 <span class="price float-right">
                                                     <span class="currency">$</span>
-                                                    <span id="total">{{ grand_total }}</span>
+                                                    <span id="total">{{grand_total}}</span>
                                                 </span>
                                             </li>
 

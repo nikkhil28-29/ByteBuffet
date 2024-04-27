@@ -29,6 +29,7 @@
                             </ul>
                         </div>
                     </div>
+                    {% comment %} cart added if login {% endcomment %}
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="login-option" style="display: flex; justify-content: flex-end;">
                             {% if user.is_authenticated %}
@@ -37,6 +38,7 @@
                                 <span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px;">{{ cart_count }}</span>
                             </a>
                             {% endif %}
+
 
                             <a href="{% url 'marketplace' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px;">MarketPlace </a>
                             {% if user.is_authenticated %}

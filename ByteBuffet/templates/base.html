@@ -27,7 +27,7 @@
 {% comment %} sweert alert {% endcomment %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- JAVASCRIPT -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -46,6 +46,10 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+{% comment %} mapp {% endcomment %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API}}&libraries=places&callback=initAutoComplete" async defer></script>
 
 {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofGJopfMzLZkI1T+IBFYO1vbBakRt1Q" crossorigin="anonymous"> {% endcomment %}
 

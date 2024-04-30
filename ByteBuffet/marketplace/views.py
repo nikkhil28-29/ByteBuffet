@@ -154,7 +154,7 @@ def delete_cart(request, cart_id):
                 cart_item = Cart.objects.get(user=request.user, id=cart_id)
                 if cart_item:
                     cart_item.delete()
-                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!', 'cart_amount':get_cart_amounts(request)})
+                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!', })
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'Cart Item does not exist!'})
         else:

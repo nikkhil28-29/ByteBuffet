@@ -161,9 +161,9 @@
         // User did not select the prediction. Reset the input field or alert()
         if (!place.geometry) {
     document.getElementById('id_address').placeholder = "Start typing...";
+    // document.getElementById('restaurant_nname').placeholder = "Resturant name ";
 } else {
-    // console.log('place name=>', place.name);
-    // console.log(place);
+
     var geocoder = new google.maps.Geocoder();
     var address = document.getElementById('id_address').value;
 
@@ -174,130 +174,39 @@
 
             $('#id_latitude').val(latitude)   // it will pu the valu of latitude in ***** whose id =id_latitude
             $('#id_longitude').val(longitude)
+    
+                // console.log(place.address_components[0].types[0].long_name)
 
-            console.log(place.address_components)
-            console.log(longitude)
+
+                for (var i = 0; i < place.address_components.length; i++) {
+                for (var j = 0; j < place.address_components[i].types.length; j++) {
+
+                    var latitude = results[0].geometry.location.lat();
+                        var longitude = results[0].geometry.location.lng();
+                    //country
+                    if (place.address_components[i].types[j] == 'country') {
+                        $('#id_country').val(place.address_components[i].long_name);
+                    }
+
+                    if (place.address_components[i].types[j] == "administrative_area_level_1") {
+                        $('#id_state').val(place.address_components[i].long_name);
+                    }
+
+                    if (place.address_components[i].types[j] == "locality") {
+                        $('#id_city').val(place.address_components[i].long_name);
+                    }
+
+                    if (place.address_components[i].types[j] == "postal_code") {
+                        $('#id_pin_code').val(place.address_components[i].long_name);
+                    }
+                }
+            }
+
             
         }
     });
 
-    for(var i=0; i<place.address_components.length; i++){
-        for(var j=0; j<place.address_components[i].types.length; j++){
-            //country
-            if(place.address_components[i].types[j]==country){
-                $('#id_country').val(place.address_components[i].types[j].long_name)
-            }
 
-            if(place.address_components[i].types[j]=="administrative_area_level_1"){
-                $('#id_state').val(place.address_components[i].types[j].long_name)
-            }
-
-            if(place.address_components[i].types[j]=="locality"){
-                $('#id_city').val(place.address_components[i].types[j].long_name)
-            }
-
-            if(place.address_components[i].types[j]=="postal_code"){
-                $('#id_pin_code').val(place.address_components[i].types[j].long_name)
-            }
-
-        }
+    
+}
     }
-    }
-        }
-
-        // get the address components and assign them to the fields
-        // console.log(place);
-    //     var geocoder = new google.maps.Geocoder()
-    //     var address = document.getElementById('id_address').value
-
-    //     geocoder.geocode({'address': address}, function(results, status){
-    //         // console.log('results=>', results)
-    //         // console.log('status=>', status)
-    //         if(status == google.maps.GeocoderStatus.OK){
-    //             var latitude = results[0].geometry.location.lat();
-    //             var longitude = results[0].geometry.location.lng();
-
-    //             // console.log('lat=>', latitude);
-    //             // console.log('long=>', longitude);
-    //             $('#id_latitude').val(latitude);
-    //             $('#id_longitude').val(longitude);
-
-    //             $('#id_address').val(address);
-    //         }
-    //     });
-
-    //     // loop through the address components and assign other address data
-    //     console.log(place.address_components);
-    //     for(var i=0; i<place.address_components.length; i++){
-    //         for(var j=0; j<place.address_components[i].types.length; j++){
-    //             // get country
-    //             if(place.address_components[i].types[j] == 'country'){
-    //                 $('#id_country').val(place.address_components[i].long_name);
-    //             }
-    //             // get state
-    //             if(place.address_components[i].types[j] == 'administrative_area_level_1'){
-    //                 $('#id_state').val(place.address_components[i].long_name);
-    //             }
-    //             // get city
-    //             if(place.address_components[i].types[j] == 'locality'){
-    //                 $('#id_city').val(place.address_components[i].long_name);
-    //             }
-    //             // get pincode
-    //             if(place.address_components[i].types[j] == 'postal_code'){
-    //                 $('#id_pin_code').val(place.address_components[i].long_name);
-    //             }else{
-    //                 $('#id_pin_code').val("");
-    //             }
-    //         }
-    //     }
-
-    // }
-
-
-    // $(document).ready(function(){
-    //     // add to cart
-    //     $('.add_to_cart').on('click', function(e){   //class = add_to_cart, in vendordetail.html, 
-    //         e.preventDefault();                      //and it passes the data-id/ data-url
-            
-    //         food_id = $(this).attr('data-id');
-    //         url = $(this).attr('data-url');
-            
-        
-    //         $.ajax({
-    //             type: 'GET',    // get the resposne from teh views.
-    //             url: url,
-    //             success: function(response){
-    //                 console.log(response)
-    //                 if(response.status == 'login_required'){
-    //                     swal("Login Failed!")
-    //                     // .then(function(){
-    //                         // window.location = '/login';
-                        
-    //                 }else if(response.status == 'Failed'){
-    //                     swal(response.message, '', 'error')
-    //                 }else{
-    //                     $('#cart_counter').html(response.cart_counter['cart_count']);
-    //                     $('#qty-'+food_id).html(response.qty);
-    //                 }
-
-
-    //                 //     // subtotal, tax and grand total
-    //                 //     applyCartAmounts(
-    //                 //         response.cart_amount['subtotal'],
-    //                 //         response.cart_amount['tax_dict'],
-    //                 //         response.cart_amount['grand_total']
-    //                 //     )
-    //                 // }
-    //             }
-    //         })
-    //     })
-
-
-    //     // place the cart item quantity on load
-    //     $('.item_qty').each(function(){            //class- item_qty, to calculate the 
-    //         var the_id = $(this).attr('id')
-    //         var qty = $(this).attr('data-qty')
-    //         $('#'+the_id).html(qty)
-    //     })
-
-

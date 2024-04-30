@@ -35,8 +35,13 @@
     right: 10px;
     cursor: pointer;
 }
+/* .main-search.fancy .field-holder{
+    color:#000000  !important;
+} */
 
-
+    /* Style for darkened placeholder text
+    ::placeholder {
+        color: #666; } */
 
 
 

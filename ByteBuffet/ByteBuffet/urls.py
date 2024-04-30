@@ -9,11 +9,15 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home,name='home'),
-     path('cart/', MarketplaceViews.cart, name='cart'),
      
     path('', include('accounts.urls')),
     path('verification/', include('verify_email.urls')),
-    path('marketplace/', include('marketplace.urls')),	
+    path('marketplace/', include('marketplace.urls')),
+
+    path('cart/', MarketplaceViews.cart, name='cart'),
+   
+    # search	
+    path('search/', MarketplaceViews.search, name='search'),
 
     # path('cart/', MarketPlace.views)
 

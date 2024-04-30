@@ -44,39 +44,6 @@ def vendor_detail(request, vendor_slug):
     }
     return render(request, 'marketplace/vendor_detail.html',context)
 
-# def add_to_cart(request, food_id):    #from ajax
-#     if request.user.is_authenticated:
-#         print(request.user.email)
-#         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-
-#             print(food_id)
-#         # headers.get('x-requested-with') == 'XMLHttpRequest':  #whether the requested is an AJAX request.
-#             try:
-#                 fooditem = FoodItem.objects.get(id=food_id)
-#                 print(fooditem.category)
-#                 print(fooditem.food_title)
-
-#                 try:
-#                     CheckKart = Cart.objects.get(user=request.user, fooditem=fooditem)
-#                     print(CheckKart.quantity)
-
-#                     CheckKart.quantity += 1
-#                     CheckKart.save()
-#                     return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
-                    
-#                 except ObjectDoesNotExist:
-#                     CheckKart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
-#                     return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': cart_counter(request), 'qty': CheckKart.quantity, 'cart_amount': get_cart_amounts(request)})
-#             except FoodItem.DoesNotExist:
-#                 return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
-#             except Exception as e:
-#                 print(e)  
-#         else:
-#             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
-        
-#     else:
-#         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
-
 @never_cache
 def add_to_cart(request, food_id):
     if request.user.is_authenticated:
@@ -159,3 +126,24 @@ def delete_cart(request, cart_id):
                 return JsonResponse({'status': 'Failed', 'message': 'Cart Item does not exist!'})
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
+
+
+
+            # method for search restaurat on home page
+
+def search(request):
+    address=request.GET['src_address']  #name=src_address in html , from where this func/url is called
+    latitute=request.GET['lat'] 
+    longitude=request.GET['long'] 
+    radius=request.GET['radius'] 
+    keyword = request.GET.get('keyword')   #search for food/restaurant
+
+    vendors=Vendor.objects.filter(user__is_active=True, is_approved=True, vendor_name__icontains=keyword)
+
+    vendor_count=vendors.count()
+    context={
+        'vendor_count':vendor_count,
+        'vendors':vendors
+    }
+   
+    return render(request, 'marketplace/listings.html', context)

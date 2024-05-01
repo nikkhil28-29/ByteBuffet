@@ -17,7 +17,12 @@
                             <div class="listing-sorting-holder">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {% if vendor_count %}
                                         <h4>{{ vendor_count }} Restaurant's found</h4>
+                                        {% else %}
+                                        <h4>No Restaurant found <i class="bi bi-emoji-frown"></i></h4>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -35,11 +40,7 @@
                                                     {% endif %}
                                                 </a>
                                             </figure>
-                                            {% comment %} {% if vendor.is_open %}
-                                            <span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
-                                            {% else %}
-                                             <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
-                                            {% endif %} {% endcomment %}
+                                            
                                         </div>
                                         <div class="text-holder">
                                             
@@ -50,6 +51,10 @@
                                             </div>
                                             {% if vendor.user_profile.address %}
                                             <span><small class="text-muted">{{ vendor.user_profile.address }}</small></span>
+                                            {% endif %}
+                                            
+                                            {% if src_location %}
+                                            <br><span><small><i class="bi bi-arrow-return-right"></i><b>{{vendor.kms}}</b> km away from  {{src_location}}</small></span><br/>
                                             {% endif %}
 
                                             {% comment %} {% if source_location %}

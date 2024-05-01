@@ -1,19 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from django.db.models import Q, Prefetch
+# from django.db.models import Prefetch
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.cache import never_cache
 
 from django.shortcuts import get_object_or_404, redirect, render
-from django.db.models import Prefetch
+
 from .context_processors import cart_counter, get_cart_amounts
 from accounts.models import UserProfile
-from menu.models import Category, FoodItem
-from menu.models import Vendor
+from menu.models import Category, FoodItem,Vendor
+# from menu.models import Vendor
 from .models import Cart
 from django.contrib.auth.decorators import login_required
 
+#GIS
+from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance
+
 # Create your views here.
+
 
 def marketplace(request):
     vendors = Vendor.objects.filter(is_approved=True, user__is_active=True)
@@ -132,18 +141,39 @@ def delete_cart(request, cart_id):
             # method for search restaurat on home page
 
 def search(request):
-    address=request.GET['src_address']  #name=src_address in html , from where this func/url is called
-    latitute=request.GET['lat'] 
-    longitude=request.GET['long'] 
-    radius=request.GET['radius'] 
-    keyword = request.GET.get('keyword')   #search for food/restaurant
+    if not 'src_address' in request.GET:
+        return redirect('marketplace')
+    else:
+        vendors=None
+        address=request.GET['src_address']  #name=src_address in html , from where this func/url is called
+        latitude=request.GET['lat'] 
+        longitude=request.GET['long'] 
+        radius=request.GET['radius'] 
+        keyword = request.GET.get('keyword')   #search for food/restaurant
 
-    vendors=Vendor.objects.filter(user__is_active=True, is_approved=True, vendor_name__icontains=keyword)
+        # vendors=Vendor.objects.filter(user__is_active=True, is_approved=True, vendor_name__icontains=keyword)
+        search_vendor_by_food=FoodItem.objects.filter(food_title__icontains=keyword, is_available=True).values_list('vendor', flat=True) #that vendor is in mdoel
 
-    vendor_count=vendors.count()
-    context={
-        'vendor_count':vendor_count,
-        'vendors':vendors
-    }
-   
+        if latitude and longitude and radius:
+            pnt=GEOSGeometry('POINT(%s %s)'% (longitude, latitude))
+            
+            # all the vendor (id) which have the food , which have searched for
+            vendors=Vendor.objects.filter(Q(id__in=search_vendor_by_food) | Q(user__is_active=True, is_approved=True, 
+            vendor_name__icontains=keyword), user_profile__location__distance_lte=(pnt, D(km=radius))).annotate(distance1=Distance("user_profile__location", pnt)).order_by("distance1") #user_profile has location field
+            #order the listed items by distance          #__lte= (<=)
+
+            for i in vendors:
+                i.kms = round(i.distance1.km, 2)    # send distance from particuslar vendor
+
+
+        vendor_count=vendors.count() if vendors is not None else 0
+
+            
+
+        context={
+            'vendor_count':vendor_count,
+            'vendors':vendors,
+            'src_location':address
+        }
+
     return render(request, 'marketplace/listings.html', context)

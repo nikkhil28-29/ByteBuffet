@@ -79,7 +79,8 @@ INSTALLED_APPS = [
     'vendor',
     'menu',
     'marketplace',
-    "verify_email"
+    "verify_email",
+    "django.contrib.gis"
 ]
 
 MIDDLEWARE = [
@@ -179,7 +180,8 @@ MEDIA_ROOT = BASE_DIR /'media'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'PORT': '5432',
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),

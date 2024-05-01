@@ -174,6 +174,9 @@
 
             $('#id_latitude').val(latitude)   // it will pu the valu of latitude in ***** whose id =id_latitude
             $('#id_longitude').val(longitude)
+            // console.log(latitude)
+            // console.log(longitude)
+            
     
                 // console.log(place.address_components[0].types[0].long_name)
 
@@ -181,8 +184,7 @@
                 for (var i = 0; i < place.address_components.length; i++) {
                 for (var j = 0; j < place.address_components[i].types.length; j++) {
 
-                    var latitude = results[0].geometry.location.lat();
-                        var longitude = results[0].geometry.location.lng();
+                
                     //country
                     if (place.address_components[i].types[j] == 'country') {
                         $('#id_country').val(place.address_components[i].long_name);

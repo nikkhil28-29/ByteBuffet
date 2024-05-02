@@ -40,7 +40,7 @@
 
 															{% comment %} <span id="foodbakery_radius_location_open333" class="foodbakery-radius-location"><i class="icon-target5"></i></span> {% endcomment %}
 															<input type="text" name="src_address" class="location-field-text filter" placeholder="All Locations" id="id_address">
-															<input type="hidden" name="lat" value="" id=id_latitude>
+											 				<input type="hidden" name="lat" value="" id=id_latitude>
 															<input type="hidden" name="long" value="" id=id_longitude>
 														</div>
 														
@@ -90,13 +90,14 @@
 								<li class="has-border">
 									<figure>
 										{% if vendor.user_profile.profile_pic %}
-											<a href="#"><img src="{{ vendor.user_profile.profile_pic.url }}" class="attachment-full size-full wp-post-image" alt=""></a>
+											<a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{{ vendor.user_profile.profile_pic.url }}" class="attachment-full size-full wp-post-image" alt=""></a>
 										{% else %}
-											<a href="#"><img src="{% static 'images/default-cover.png' %}" class="attachment-full size-full wp-post-image" alt=""></a>
+											<a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{% static 'images/default-cover.png' %}" class="attachment-full size-full wp-post-image" alt=""></a>
 										{% endif %}
 									</figure>
 								</li>
 							      {% endfor %}
+								  
 								
 									
 								</ul>
@@ -125,14 +126,14 @@
 									<li class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 										<div class="list-post featured">
 											<div class="img-holder">
-												<figure><a href="#">
+												<figure><a href="{% url 'vendor_detail' vendor.vendor_slug %}">
 												{% if vendor.user_profile.profile_pic %}
 												<img src="{{ vendor.user_profile.cover_photo.url }}" class="img-thumb wp-post-image" alt="">
 												{% else %}
 													<img src="{% static 'images/default-cover.png' %}" class="img-thumb wp-post-image" alt="">
 												{% endif %}
 
-												</a></figure>
+												</a></figure>	
 												<span class="restaurant-status close">
 													<em class="bookmarkRibbon"></em>Close
 												</span>
@@ -146,12 +147,17 @@
 												</div>
 												<div class="post-title">
 													<h5>
-														<a href="listing-detail.html">{{vendor}}</a>
+														<a href="{% url 'vendor_detail' vendor.vendor_slug %}">{{vendor}}</a>
 													</h5>
 												</div>
 												{% if vendor.user_profile.city and vendor.user_profile.state and vendor.user_profile.pin_code %}
-										<span>{{ vendor.user_profile.city }}, {{ vendor.user_profile.state }}, {{ vendor.user_profile.pin_code }}</span>
-										{% endif %}
+												<span>{{ vendor.user_profile.city }}, {{ vendor.user_profile.state }}, {{ vendor.user_profile.pin_code }}</span>
+												{% endif %}
+
+												{% if vendor.kms %}
+												<b>{{vendor.kms}}</b> km away
+												{% endif %}
+
 											</div>
 											
 										</div>

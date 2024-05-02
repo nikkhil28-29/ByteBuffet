@@ -167,9 +167,7 @@ def search(request):
 
 
         vendor_count=vendors.count() if vendors is not None else 0
-
-            
-
+        
         context={
             'vendor_count':vendor_count,
             'vendors':vendors,

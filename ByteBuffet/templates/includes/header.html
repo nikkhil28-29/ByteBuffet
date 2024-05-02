@@ -22,8 +22,8 @@
                             <ul>
                                 <li class="location-has-children choose-location">
                                     <form action="#">
-                                        <input type="text" value="" name="location" placeholder="Enter your delivery location" autocomplete="off">
-                                        <span id="foodbakery_radius_location_open" class="foodbakery-radius-location"><i class="icon-target5"></i></span>
+                                        <input type="text" value="" id="curr_loc"name="location" placeholder="Ur Current Loaction" autocomplete="off">
+                                        <span id="foodbakery_radius_location_open" class="foodbakery-radius-location" onclick="getLocation()"><i class="icon-target5"></i></span>
                                     </form>
                                 </li>
                             </ul>
@@ -58,4 +58,49 @@
 	</div>
     <!-- Header End -->
 </div>
-{% comment %} {% endblock %} {% endcomment %}
+
+
+
+
+  {% comment %} getting the curr location using browser {% endcomment %}
+
+<script>
+var x = document.getElementById("curr_loc");
+var curr_location=sessionStorage.getItem("curr_location")
+if(curr_location !=""){
+    x.value=curr_location;
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+    var lat=position.coords.latitude
+    var long=position.coords.longitude
+    //x.value=lat+","+long    // print there when clicked
+
+   // console.log(position)    , to get how to reach lat/long from 
+   //hit AJAX request to google maps endpoints and get the loc(using lat/long)
+   var GOOGLE_API_KEY="{{GOOGLE_API}}"      // from context processor
+    var apiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&key=' + GOOGLE_API_KEY;
+
+    $.ajax({
+        url:apiUrl,
+        type:'GET',
+        success:function(response){
+            console.log(response)
+            
+            var curr_location=response.results[1].formatted_address 
+            x.value=curr_location                                     // insert the value  there when icon clicked
+            sessionStorage.setItem("curr_location",curr_location )    // KEY VALUE PAIR
+            window.location='?lat='+lat+'&long='+long                  // add these to url , to send data .
+
+        }
+    })
+}
+</script>

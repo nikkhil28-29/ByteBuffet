@@ -153,7 +153,7 @@
         //when the prediction is clicked , 
     autocomplete.addListener('place_changed', onPlaceChanged);
     }
-
+    
     function onPlaceChanged (){
         var place = autocomplete.getPlace();   //will get the , complate address
         console.log("places", place)
@@ -161,6 +161,7 @@
         // User did not select the prediction. Reset the input field or alert()
         if (!place.geometry) {
     document.getElementById('id_address').placeholder = "Start typing...";
+    
     // document.getElementById('restaurant_nname').placeholder = "Resturant name ";
 } else {
 
@@ -171,7 +172,7 @@
         if (status == google.maps.GeocoderStatus.OK) {
             var latitude = results[0].geometry.location.lat();
             var longitude = results[0].geometry.location.lng();
-
+ 
             $('#id_latitude').val(latitude)   // it will pu the valu of latitude in ***** whose id =id_latitude
             $('#id_longitude').val(longitude)
             // console.log(latitude)
@@ -179,8 +180,6 @@
             
     
                 // console.log(place.address_components[0].types[0].long_name)
-
-
                 for (var i = 0; i < place.address_components.length; i++) {
                 for (var j = 0; j < place.address_components[i].types.length; j++) {
 
@@ -202,13 +201,8 @@
                         $('#id_pin_code').val(place.address_components[i].long_name);
                     }
                 }
-            }
-
-            
+            }            
         }
     });
-
-
-    
 }
     }

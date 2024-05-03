@@ -2,7 +2,7 @@
 from django.db import models
 from accounts.models import MyUser, UserProfile
 from accounts.utils import send_notification_approve
-# from datetime import time, date, datetime
+from datetime import time, date, datetime
 
 
 class Vendor(models.Model):
@@ -40,3 +40,30 @@ class Vendor(models.Model):
                     mail_subject = "We're sorry! You are not eligible for marketplace."
                     send_notification_approve(mail_subject, mail_template, context)
         return super(Vendor, self).save(*args, **kwargs)
+
+DAYS=[
+    (1, ("Monday")),
+    (2, ("Tuesday")),
+    (3, ("Wednesday")),
+    (4, ("Thursday")),
+    (5, ("Friday")),
+    (6, ("Saturday")),
+    (7, ("Sunday"))
+]
+
+CONTACT_HOURS = [(time(h, m).strftime("%I:%M %p"), time(h, m).strftime("%I:%M %p")) for h in range(0, 24) for m in range(0, 60, 30)]
+
+
+
+class OpenHour(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)  # manyto many relations
+                                                                    
+    day = models.IntegerField(choices=DAYS)
+    from_hour=models.CharField(choices=CONTACT_HOURS, max_length=10, blank=True)
+    to_hour=models.CharField(choices=CONTACT_HOURS, max_length=10, blank=True)
+    is_closed=models.BooleanField(default=False)
+
+    class Meta:
+        ordering =('day', 'from_hour')
+        unique_together=('day', 'from_hour', 'to_hour')
+ 

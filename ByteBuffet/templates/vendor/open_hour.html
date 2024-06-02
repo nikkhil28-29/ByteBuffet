@@ -6,8 +6,6 @@
 {% include 'includes/alert.html' %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...">
 
- 
-
 <!-- Main Section Start -->
 <div class="main-section">
     {% include 'includes/cover.html' %}
@@ -21,9 +19,43 @@
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="user-dashboard loader-holder">
                         <div class="user-holder">
-                            <h5 class="text-uppercase">Build Your Food Menu</h5>
-							<hr>
-                            <h6>OPening Categories</h6>
+                            <h5 class="text-uppercase">Opening Hours</h5>
+                            <hr>
+                            
+                            <table class="table opening_hours" style="width: 100%; border: none !important;">
+                                <tbody>
+                                    {% for hour in open_hours %}
+                                        <tr id="hour-{{ hour.id }}">
+                                            <td><b>{{ hour }}</b></td>
+                                            <td>{% if hour.is_closed %}Closed{% else %}{{ hour.from_hour }} - {{ hour.to_hour }}{% endif %}</td>
+                                            <td><a href="#" class="remove_hour" data-url="{% url 'open_hour' %}">Remove</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <br>
+                            <form  id="open_hours">
+    
+    <div class="row">
+        <div class="col-md-2">
+            {{ form.day }}
+        </div>
+        <div class="col-md-2">
+            {{ form.from_hour }}
+        </div>
+        <div class="col-md-2">
+            {{ form.to_hour }}
+        </div>
+        <div class="col-md-3">
+            {{ form.is_closed }} Set as Closed
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-success add_hour">Add hours</button>
+        </div>
+    </div>
+</form>
+
                             
                         </div>
                     </div>

@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from slugify import slugify
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from menu.models import Category,FoodItem
 from menu.forms import CategoryForm,FoodItemForm
-from .models import  Vendor
+from .models import  Vendor,OpenHour
 from django.contrib import messages
-from .forms import VendorForm
+from .forms import VendorForm,OpenHourForm
 from accounts.models import UserProfile
 from accounts.forms import UserProfileForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -218,5 +219,15 @@ def delete_food(request, pk=None):
 
 
 def open_hour(request):
-    return render(request, 'vendor/open_hour.html')
+    open_hours=OpenHour.objects.filter(vendor=get_vendor(request))
+    form=OpenHourForm()
+    context={
+        'form':form,
+        'open_hours':open_hours
+    }
+    return render(request, 'vendor/open_hour.html', context)
 
+def add_open_hour(request):
+   
+    return HttpResponse("add ur hours")
+       

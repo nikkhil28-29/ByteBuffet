@@ -139,6 +139,17 @@
             }
 
         });
+
+
+
+// add hours through ajax
+        $('.add_hour').on('click', function(e) {
+            e.preventDefault();
+            alert('added');
+            });
+
+
+
     };
 
     let autocomplete;

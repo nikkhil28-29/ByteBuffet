@@ -24,4 +24,5 @@ urlpatterns=[
 
         #OpenHeour
         path('open-hour/', views.open_hour, name='open_hour'),
+        path('open-hour/add', views.add_open_hour, name='add_open_hour'),
 ]

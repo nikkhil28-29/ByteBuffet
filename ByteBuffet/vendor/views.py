@@ -219,3 +219,4 @@ def delete_food(request, pk=None):
 
 def open_hour(request):
     return render(request, 'vendor/open_hour.html')
+

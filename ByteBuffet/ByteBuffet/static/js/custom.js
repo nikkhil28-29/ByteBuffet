@@ -162,18 +162,18 @@
             condition = "day != '' && from_hour != '' && to_hour != ''"
         }
 
-        if(eval(condition)){
-            $.ajax({
-                type: 'POST',
-                url: url, //will land to add_open_hours
-                data: {
-                    'day': day,
-                    'from_hour': from_hour,
-                    'to_hour': to_hour,
-                    'is_closed': is_closed,
-                    'csrfmiddlewaretoken': csrf_token,
-                },
-                success: function(response){   // will reciev the rturn rponse form add_hours
+        // if(eval(condition)){
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: url, //will land to add_open_hours
+        //         data: {
+        //             'day': day,
+        //             'from_hour': from_hour,
+        //             'to_hour': to_hour,
+        //             'is_closed': is_closed,
+        //             'csrfmiddlewaretoken': csrf_token,
+        //         }
+                // success: function(response){   // will reciev the rturn rponse form add_hours
         //             if(response.status == 'success'){
         //                 if(response.is_closed == 'Closed'){
         //                     html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>Closed</td><td><a href="#" class="remove_hour" data-url="/vendor/opening-hours/remove/'+response.id+'/">Remove</a></td></tr>';

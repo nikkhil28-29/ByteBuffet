@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 
+import os
+
+# Set the GDAL library path environment variable
+os.environ['GDAL_LIBRARY_PATH'] = '/path/to/gdal/library'
+
 # from decouple import config, Config, Csv
 # config.read_env()
 # from verify_email.apps import VerifyEmailConfig
@@ -80,7 +85,11 @@ INSTALLED_APPS = [
     'menu',
     'marketplace',
     "verify_email",
-    "django.contrib.gis"
+    "customers",
+    # "rest_framework",
+    # "django.contrib.gis"
+    "orders",
+    "rest_framework_simplejwt"
 ]
 
 MIDDLEWARE = [

@@ -36,3 +36,7 @@ class FoodItem(models.Model):
 
     def __str__(self):
         return self.food_title
+
+
+# name_food = FoodItem.objects.filter(foodtitle=='vadpav', vendor='Haldirand ')
+

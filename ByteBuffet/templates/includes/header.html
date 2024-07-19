@@ -1,6 +1,18 @@
 {% load static %}
 {% comment %} {% extends 'base.html' %}   {% endcomment %}
 
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="wrapper">
     <!-- Header Start -->
 	<div class="row" style="display: flex; justify-content: space-between;">
@@ -39,16 +51,25 @@
                             </a>
                             {% endif %}
 
-
-                            <a href="{% url 'marketplace' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px;">MarketPlace </a>
+                            
+                            <a href="{% url 'marketplace' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: margin-top: 3px; 10px;">MarketPlace </a>
                             {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: margin-top: 3px; 10px;">Logout </a>
+                            <a href="{% url 'myAccount' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px;">myAccount </a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px;">Login </a>
+                            <a href="{% url 'registerUser' %}" class="btn  text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px;">Register </a>
+                            <a href="{% url 'registerVendor' %}" class="btn text-uppercase bold" style="background-color: #3498db; color: black; font-weight: bold; margin-left: 10px; white-space: nowrap;">Register Restaurant</a>
+                            {% endif %}
+                            
+                            {% comment %} {% if user.is_authenticated %}
                             <span><a href="{% url 'logout' %}" class="get-start-btn" style="background-color: #FFFF00; margin-left: 10px;">Logout</a></span>
                             <span><a href="{% url 'myAccount' %}" class="get-start-btn" style="background-color: #00FF00; margin-left: 10px;">myAccount</a></span>
                             {% else %}
                             <span><a href="{% url 'login' %}" class="get-start-btn" style="background-color: #FFFF00; margin-left: 10px;">Login</a></span>
                             <span><a href="{% url 'registerUser' %}" class="cs-color cs-popup-joinus-btn login-popup ml-0" style="background-color: #00FF00; margin-left: 10px;">Register</a></span>
                             <a class="get-start-btn" href="{% url 'registerVendor' %}" style="margin-left: 10px;">Register Restaurant</a>
-                            {% endif %}
+                            {% endif %} {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -58,6 +79,14 @@
 	</div>
     <!-- Header End -->
 </div>
+
+
+
+
+
+
+
+
 
 
 

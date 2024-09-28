@@ -10,13 +10,7 @@ import simplejson as json
 from .utils import generate_order_number, order_total_by_vendor
 from accounts.utils import send_notification_approve
 from django.contrib.auth.decorators import login_required
-# import razorpay
-# from foodOnline_main.settings import RZP_KEY_ID, RZP_KEY_SECRET
 from django.contrib.sites.shortcuts import get_current_site
-
-
-
-# client = razorpay.Client(auth=(RZP_KEY_ID, RZP_KEY_SECRET))
 
 
 
@@ -183,7 +177,7 @@ def payments(request):
                 send_notification_approve(mail_subject, mail_template, context)
 
         # CLEAR THE CART IF THE PAYMENT IS SUCCESS
-        # cart_items.delete() 
+        cart_items.delete() 
 
         # RETURN BACK TO AJAX WITH THE STATUS SUCCESS OR FAILURE
         response = {
@@ -211,7 +205,7 @@ def order_complete(request):
         context = {
             'order': order,
             'ordered_food': ordered_food,
-            'subtotal': subtotal,
+            'subtotal': round(subtotal, 2),
             'tax_data': tax_data,
         }
         return render(request, 'orders/order_complete.html', context)

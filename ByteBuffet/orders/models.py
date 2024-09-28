@@ -4,6 +4,8 @@ from accounts.models import MyUser
 from menu.models import FoodItem
 from vendor.models import Vendor
 # User
+import requests
+
 
 request_object = ''
 
@@ -45,6 +47,7 @@ class Order(models.Model):
     city = models.CharField(max_length=50)
     pin_code = models.CharField(max_length=10)
     total = models.FloatField()
+    
     tax_data = models.JSONField(blank=True, help_text = "Data format: {'tax_type':{'tax_percentage':'tax_amount'}}", null=True)
     total_data = models.JSONField(blank=True, null=True)
     total_tax = models.FloatField()
@@ -62,8 +65,9 @@ class Order(models.Model):
     def order_placed_to(self):
         return ", ".join([str(i) for i in self.vendors.all()])
 
-    def get_total_by_vendor(self):
-        vendor = Vendor.objects.get(user=request_object.user)
+    def get_total_by_vendor(self, request):
+        vendor = Vendor.objects.get(user=request.user)
+        # vendor = Vendor.objects.get(user=request_object.user)
         subtotal = 0
         tax = 0
         tax_dict = {}

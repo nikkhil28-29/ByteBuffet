@@ -142,9 +142,10 @@
 
 
 
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     let subtotalElement = document.getElementById('subtotal');
     let subtotal = parseFloat(subtotalElement.innerText) || 0; 
+    // let subtotal =0;
 
     let taxPercentage = 10; // 
 

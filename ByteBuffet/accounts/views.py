@@ -17,7 +17,10 @@ from .forms import UserForm
 from .models import MyUser ,UserProfile
 from vendor.forms import VendorForm
 from vendor.models import Vendor
+from orders.models import Order
 from django.contrib import messages #import messages
+from datetime import datetime
+
 
 
 # Create your views here.
@@ -171,21 +174,65 @@ def check_role_customer(user):
     else:
         raise PermissionDenied
 
-@login_required(login_url='login')  
-@user_passes_test(check_role_customer)   #made  check_role_customer above 
 
+
+login_required(login_url='login')
+@user_passes_test(check_role_customer)
 def customerdashboard(request):
-    return render(request, 'accounts/customerdashboard.html')
-    
+    orders = Order.objects.filter(user=request.user, is_ordered=True)
+    recent_orders = orders[:5]
+    context = {
+        'orders': orders,
+        'orders_count': orders.count(),
+        'recent_orders': recent_orders,
+    }
+    return render(request, 'accounts/customerdashboard.html', context)
 
-@login_required(login_url='login') 
+
+@login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendordashboard(request):
-    vendor=Vendor.objects.get(user=request.user)
-    context={
-        'vendor':vendor,
+    vendor = Vendor.objects.get(user=request.user)
+    orders = Order.objects.filter(vendors__in=[vendor.id], is_ordered=True).order_by('created_at')
+    recent_orders = orders[:10]
+
+    # current month's revenue
+    current_month = datetime.now().month
+    current_month_orders = orders.filter(vendors__in=[vendor.id], created_at__month=current_month)
+    current_month_revenue = 0
+    for i in current_month_orders:
+        current_month_revenue += i.get_total_by_vendor(request)['grand_total']
+    
+
+    # total revenue
+    total_revenue = 0
+    for i in orders:
+        total_revenue += i.get_total_by_vendor(request)['grand_total']
+    context = {
+        'orders': orders,
+        'orders_count': orders.count(),
+        'recent_orders': recent_orders,
+        'total_revenue': total_revenue,
+        'current_month_revenue': current_month_revenue,
     }
-    return render(request, 'accounts/vendordashboard.html',context)
+    return render(request, 'accounts/vendordashboard.html', context)
+
+
+# @login_required(login_url='login')  
+# @user_passes_test(check_role_customer)   #made  check_role_customer above 
+
+# def customerdashboard(request):
+#     return render(request, 'accounts/customerdashboard.html')
+    
+
+# @login_required(login_url='login') 
+# @user_passes_test(check_role_vendor)
+# def vendordashboard(request):
+#     vendor=Vendor.objects.get(user=request.user)
+#     context={
+#         'vendor':vendor,
+#     }
+#     return render(request, 'accounts/vendordashboard.html',context)
 
 def activate(request, uidb64, token):
     try:

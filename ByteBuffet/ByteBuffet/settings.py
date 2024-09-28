@@ -101,7 +101,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware'
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
 ]
 
 ROOT_URLCONF = 'ByteBuffet.urls'
@@ -255,3 +257,24 @@ GOOGLE_API_KEY= os.environ.get('GOOGLE_API_KEY')
 PAYPAL_CLIENT_ID= os.environ.get('PAYPAL_CLIENT_ID')
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+
+
+
+# # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ByteBuffet/static')]
+# STATIC_URL = '/static/'
+# STATIC_ROOT =BASE_DIR /'static'
+# STATICFILES_DIRS=[
+#     'ByteBuffet/static'
+# ]
+# #media  file ,  photo,profile will be uploaded to media folder not sttsic
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR /'media'
+
+
+# # STORAGES = {
+# #     # ...
+# #     "staticfiles": {
+# #         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+# #     },
+# # }
+

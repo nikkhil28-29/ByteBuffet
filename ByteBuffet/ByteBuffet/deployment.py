@@ -131,3 +131,38 @@ CSRF_COOKIE_SECURE = True  # Ensure CSRF cookies are sent over HTTPS
 #         },
 #     },
 # }
+
+
+
+aiodns==3.2.0
+aiosmtpd==1.4.5
+asgiref==3.8.1
+atpublic==4.1.0
+attrs==23.2.0
+cffi==1.16.0
+Django==5.0.4
+Django-Verify-Email==2.0.3
+dnspython==2.6.1
+email_validator==2.1.1
+idna==3.6
+pillow==10.3.0
+psycopg2==2.9.9
+pycares==4.4.0
+pycparser==2.22
+python-dotenv==1.0.1
+python-slugify==8.0.4
+slugify==0.0.1
+sqlparse==0.5.0
+text-unidecode==1.3
+typing_extensions==4.11.0
+verify-email==2.4.3
+# GDAL==3.2.2
+verify_email==2.4.3
+python_dotenv==1.0.1
+rest_framework_simplejwt==0.0.2
+email_validator==2.2.0
+slugify==0.0.1
+Pillow==10.4.0
+psycopg2==binary==2.9.9
+simplejson==3.19.3
+whitenoise==6.7.0 

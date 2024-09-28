@@ -32,8 +32,8 @@ def home(request):
         lat=request.GET.get('lat')
         long=request.GET.get('long')
         
-        # pnt=GEOSGeometry('POINT(%s %s)'% (long, lat))
-        pnt=GEOSGeometry('POINT(%s %s)'% (get_set_curr_loc(request)))
+        pnt=GEOSGeometry('POINT(%s %s)'% (long, lat))
+        # pnt=GEOSGeometry('POINT(%s %s)'% (get_set_curr_loc(request)))
         
         # all the vendor (id) which have the food , which have searched for
         vendors=Vendor.objects.filter(user_profile__location__distance_lte=(pnt, D(km=150))).annotate(distance1=Distance("user_profile__location", pnt)).order_by("distance1") #user_profile has location field

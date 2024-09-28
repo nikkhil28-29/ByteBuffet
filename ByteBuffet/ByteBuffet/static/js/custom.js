@@ -142,6 +142,27 @@
 
 
 
+        document.addEventListener('DOMContentLoaded', function() {
+    let subtotalElement = document.getElementById('subtotal');
+    let subtotal = parseFloat(subtotalElement.innerText) || 0; 
+
+    let taxPercentage = 10; // 
+
+
+    let taxAmount = (subtotal * taxPercentage) / 100;
+
+   
+    document.getElementById('tax').innerText = taxAmount.toFixed(2); 
+
+    let grandTotal = subtotal + taxAmount;
+
+    document.getElementById('total').innerText = grandTotal.toFixed(2); 
+});
+
+
+
+
+
 // add hours through ajax
         $('.add_hour').on('click', function(e){
         e.preventDefault();

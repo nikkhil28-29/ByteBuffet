@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login as auth_login, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 import traceback
-from verify_email.email_handler import send_verification_email
+# from verify_email.email_handler import send_verification_email
 from slugify import slugify
 from django.contrib.auth.tokens import default_token_generator
 
@@ -121,7 +121,7 @@ def login(request):
         
         elif request.method == 'POST':
             # email = request.POST.get("email").strip()
-            password = request.POST.get("password").strip()
+            password = request.POST.get("password").strip() #strip()removes any leading, whitespace from the passw,.
             username = request.POST.get("username").strip()
 
             user = authenticate(username=username, password=password)
@@ -129,6 +129,8 @@ def login(request):
                 auth_login(request, user)
                 print("Email:", username)
                 print("Password:", password)
+      
+
                 messages.success(request, 'Login successful.')
                 return redirect('myAccount')     # my accountT view function is created below
             else:

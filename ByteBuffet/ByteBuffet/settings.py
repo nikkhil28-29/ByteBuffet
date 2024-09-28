@@ -27,7 +27,8 @@ from django.core.exceptions import ImproperlyConfigured
 # Load environment variables from .env file
 load_dotenv()
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "8d^$9$t6e*woiac1763h#0w^p%kwd-67)_bm7wibs$&v^^_8k&"
 
 if not SECRET_KEY:
     raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
@@ -87,9 +88,9 @@ INSTALLED_APPS = [
     "verify_email",
     "customers",
     # "rest_framework",
-    # "django.contrib.gis"
+    "django.contrib.gis",
     "orders",
-    "rest_framework_simplejwt"
+    # "rest_framework_simplejwt"
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,7 @@ TEMPLATES = [
                 'marketplace.context_processors.cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
                 'marketplace.context_processors.get_map_api',
+                'marketplace.context_processors.get_paypal_client_id',
             ],
         },
     },
@@ -187,6 +189,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
 
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.db.backends.postgresql',
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'PORT': '5432',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'nikhil28282828',
+#         'HOST': 'localhost',
+#     }
+# }
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.postgresql',
@@ -198,6 +211,16 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         # 'ENGINE': 'django.contrib.gis.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'my_database.db',
+#     }
+# }
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -220,8 +243,15 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 
+# EMAIL_HOST_USER = 'bytebuffet00@gmail.com'
+# EMAIL_HOST_PASSWORD = 'ptpj cjwq xadu xayn'
+# DEFAULT_FROM_EMAIL = 'bytebuffet00@gmail.com'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 GOOGLE_API_KEY= os.environ.get('GOOGLE_API_KEY')
+
+PAYPAL_CLIENT_ID= os.environ.get('PAYPAL_CLIENT_ID')
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'

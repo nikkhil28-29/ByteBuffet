@@ -84,44 +84,51 @@
                                     <div>
                                         <ul>
                                             <li style="list-style-type: none;">
-                                                Subtotal
-                                                <span class="price float-right">
-                                                    <span class="currency">$</span>
-                                                    <span id="subtotal">{{subtotal}}</span>   
-                                                    {% comment %} //diretly fom context_processor, dict[] {% endcomment %}
-                                                </span>
-                                            </li>
+    Subtotal
+    <span class="price float-right">
+        <span class="currency">$</span>
+        <span id="subtotal">{{ subtotal }}</span>
+        {% comment %} //directly from context_processor, dict[] {% endcomment %}
+    </span>
+</li>
 
-                                            {% comment %} {% for key, value in tax_dict.items %}
-                                                {% for i, j in value.items %}
-                                                    <li style="list-style-type: none;">
-                                                        {{ key }} <small>({{ i }}%)</small>
-                                                        <span class="price float-right">
-                                                            <span class="currency">$</span>
-                                                            <span id="tax-{{ key }}">{{ j }}</span>
-                                                        </span>
-                                                    </li>
-                                                {% endfor %}
-                                            {% endfor %} {% endcomment %}
+<li style="list-style-type: none; font-weight: 600;">
+    TAxx (10% Tax)
+    <span class="price float-right">
+        <span class="currency">$</span>
+        <span id="tax">0</span>
+    </span>
+</li>
 
-                                            <li style="list-style-type: none; font-weight: 600;">
-                                                TAxx
-                                                <span class="price float-right">
-                                                    <span class="currency">$</span>
-                                                    <span id="tax">0</span>
-                                                </span>
-                                            </li>
+<li style="list-style-type: none; font-weight: 600;">
+    TOTAL
+    <span class="price float-right">
+        <span class="currency">$</span>
+        <span id="total">{{ grand_total }}</span>
+    </span>
+</li>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    let subtotalElement = document.getElementById('subtotal');
+    let subtotal = parseFloat(subtotalElement.innerText) || 0; 
+
+    let taxPercentage = 10; // 10% tax
+
+    let taxAmount = (subtotal * taxPercentage) / 100;
+
+    document.getElementById('tax').innerText = taxAmount.toFixed(2); 
+    let grandTotal = subtotal + taxAmount;
+    document.getElementById('total').innerText = grandTotal.toFixed(2); 
+});
+
+</script>
 
 
-                                            <li style="list-style-type: none; font-weight: 600;">
-                                                TOTAL
-                                                <span class="price float-right">
-                                                    <span class="currency">$</span>
-                                                    <span id="total">{{grand_total}}</span>
-                                                </span>
-                                            </li>
 
-                                            {% comment %} <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">PROCEED TO CHECKOUT</a> {% endcomment %}
+
+                                            <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">PROCEED TO CHECKOUT</a>
                                         </ul>
                                     </div>
                                     

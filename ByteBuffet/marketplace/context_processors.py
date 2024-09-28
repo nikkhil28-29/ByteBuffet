@@ -6,6 +6,9 @@ from django.conf import settings
 def get_map_api(request):
     return {"GOOGLE_API":settings.GOOGLE_API_KEY}
 
+def get_paypal_client_id(request):
+    return {'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID}
+
 def cart_counter(request):
     cart_count = 0
     if request.user.is_authenticated:

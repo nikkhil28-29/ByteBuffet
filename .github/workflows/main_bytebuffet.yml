@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'bytebuffet'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9D195DD4836D43048DA7A0A562F12FFC }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2FBACB37D5F346AE976BA07E9B8A3A6B }}

@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 
 from django.urls import path
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from django.contrib.staticfiles.urls import staticfiles_urlpatter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
